@@ -1,0 +1,126 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        />
+        <title>Document</title>
+        <style>
+      body {
+        padding: 60px;
+        font-family: "Hevletica Neue", "Helvetica", "Arial", sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      body > h4 {
+        font-size: 24px;
+        line-height: 24px;
+        text-transform: uppercase;
+        margin-bottom: 60px;
+      }
+
+      body > header {
+        display: flex;
+      }
+
+      body > header > .address-block:nth-child(2) {
+        margin-left: 100px;
+      }
+
+      .address-block address {
+        font-style: normal;
+      }
+
+      .address-block > h5 {
+        font-size: 14px;
+        line-height: 14px;
+        margin: 0px 0px 15px;
+        text-transform: uppercase;
+        color: #aaa;
+      }
+
+      .table {
+        width: 100%;
+        margin-top: 60px;
+      }
+
+      .table table {
+        width: 100%;
+        border: 1px solid #eee;
+        border-collapse: collapse;
+      }
+
+      .table table tr th,
+      .table table tr td {
+        font-size: 15px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-collapse: collapse;
+      }
+
+      .table table tfoot tr td {
+        border-top: 3px solid #eee;
+      }
+    </style>
+    </head>
+    <body>
+        <h4>Invoice No: {{orderId}}</h4>
+        <header>
+            <div class="address-block">
+                <h5>Details of Supplier</h5>
+                <address>
+                    SPEED AWAY<br />
+                    321 Customer St.<br />
+                    Happy Place, FL 17641<br />
+                </address>
+            </div>
+            <div class="address-block">
+                <h5>Details of Receiver(Billed to)</h5>
+                <address>
+                    {{customerDetails.firstname}} {{customerDetails.lastname}}<br />
+                    123 Business St.<br />
+                    Fake Town, TN 37189<br />
+                </address>
+            </div>
+        </header>
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Model
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each productList as |product|}}
+                        <tr>
+                            <td>{{product.name}}</td>
+                            <td>{{product.model}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.total}}</td>
+                            <td>{{product.quantity}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,7 @@
+25-08-2023 11:37:47 error: getAllGalleryItemsByProjectId,v1/gallery/getGalleryList/:projectId,getAllGalleryItemsByProjectId,200,Fri Aug 25 2023 11:37:47 GMT+0530 (India Standard Time),Fri Aug 25 2023 11:37:47 GMT+0530 (India Standard Time)
+25-08-2023 11:37:52 error: getAllGalleryItemsByProjectId,v1/gallery/getGalleryList/:projectId,getAllGalleryItemsByProjectId,200,Fri Aug 25 2023 11:37:52 GMT+0530 (India Standard Time),Fri Aug 25 2023 11:37:52 GMT+0530 (India Standard Time)
+25-08-2023 11:58:11 error: addTestimony,v1/testimony/addTestimony,designation is not allowed,400,Fri Aug 25 2023 11:58:11 GMT+0530 (India Standard Time),Fri Aug 25 2023 11:58:11 GMT+0530 (India Standard Time)
+25-08-2023 12:01:42 error: addTestimony,v1/testimony/addTestimony,Name is required,400,Fri Aug 25 2023 12:01:42 GMT+0530 (India Standard Time),Fri Aug 25 2023 12:01:42 GMT+0530 (India Standard Time)
+25-08-2023 12:42:16 error: getAllGalleryItemsByProjectId,v1/gallery/getGalleryList/:projectId,getAllGalleryItemsByProjectId,200,Fri Aug 25 2023 12:42:16 GMT+0530 (India Standard Time),Fri Aug 25 2023 12:42:16 GMT+0530 (India Standard Time)
+25-08-2023 13:26:40 error: getBlogPostById,v1/blog/getBlogPostById/:blogId,blogId is required,400,Fri Aug 25 2023 13:26:40 GMT+0530 (India Standard Time),Fri Aug 25 2023 13:26:40 GMT+0530 (India Standard Time)
+25-08-2023 13:27:15 error: getBlogPostById,v1/blog/getBlogPostById/:blogId,blogId must be a number,400,Fri Aug 25 2023 13:27:15 GMT+0530 (India Standard Time),Fri Aug 25 2023 13:27:15 GMT+0530 (India Standard Time)
