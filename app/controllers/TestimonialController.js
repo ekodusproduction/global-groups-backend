@@ -95,7 +95,7 @@ const commonAddTestimonial = async(request, response, apiName)=>{
 
 const deleteTestimony = async(request, response) =>{
     console.log("data",request.body)
-    const {error} = deleteTestimonyValidation(request.body)
+    const {error} = deleteTestimonyValidation(request.params)
     let apiName = "deleteTestimony";
     if (error) {
         console.log("error", error)

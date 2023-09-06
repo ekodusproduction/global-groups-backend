@@ -23,6 +23,17 @@ const getBlogPostListService = async (request) => {
       })
   })
 }
+const getBlogPostListAdminService = async (request) => {
+  return new Promise((resolve, reject) => {
+    BlogModel.getAllBlogPostListAdmin(request)
+      .then((result) => {
+        resolve(result)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
 const getBlogPostByIdService = async (request) => {
   return new Promise((resolve, reject) => {
     BlogModel.getBlogDetailsById(request)
@@ -49,7 +60,7 @@ const updateBlogPostService = async (request) => {
 
 const DeleteBlogPostService = async (request) => {
     return new Promise((resolve, reject) => {
-      BlogModel.postBlog(request)
+      BlogModel.deleteBlogPost(request)
         .then((result) => {
           resolve(result)
         })
@@ -64,5 +75,6 @@ module.exports = {
     DeleteBlogPostService,
     updateBlogPostService,
     getBlogPostListService,
-    getBlogPostByIdService
+    getBlogPostByIdService,
+    getBlogPostListAdminService
 }

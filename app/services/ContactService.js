@@ -25,7 +25,20 @@ const getContactListService = async (request) => {
   }
   
 
+  const getEnquiryCountService = async (request) => {
+    return new Promise((resolve, reject) => {
+      ContactModel.getAllEnquiryCount(request)
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
+
 module.exports = {
     contactServices,
-    getContactListService
+    getContactListService,
+    getEnquiryCountService
 }

@@ -63,7 +63,7 @@ Router.post("/testimony/updateTestimony", (response, request) => {
     TestimonialController.updateTestimony(response, request);
 });
 
-Router.delete("/testimony/deleteTestimony", (response, request) => {
+Router.delete("/testimony/deleteTestimony/:id", (response, request) => {
     TestimonialController.deleteTestimony(response, request);
 });
 

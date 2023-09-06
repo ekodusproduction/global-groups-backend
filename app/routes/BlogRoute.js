@@ -158,7 +158,7 @@ Router.post("/blog/updateBlogPost",  (response, request) => {
  *       500:
  *         description: Internal Server Error
  */
-Router.delete("/blog/deleteBlogPost",  (response, request) => {
+Router.delete("/blog/deleteBlogPost/:blogId",  (response, request) => {
     BlogController.deleteBlogPost(response, request);
 });
 
@@ -167,6 +167,11 @@ Router.delete("/blog/deleteBlogPost",  (response, request) => {
 Router.get("/blog/getBlogPostList",  (response, request) => {
     BlogController.getBlogPostList(response, request);
 });
+
+Router.get("/blog/getAdminBlogPostList",  (response, request) => {
+    BlogController.getBlogPostListForAdmin(response, request);
+});
+
 
 Router.get("/blog/getBlogPostById/:blogId",  (response, request) => {
     BlogController.getBlogPostById(response, request);

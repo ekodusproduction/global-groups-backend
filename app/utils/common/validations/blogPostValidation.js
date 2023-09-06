@@ -16,7 +16,7 @@ const blogPostValidation = (data) => {
         'string.empty': 'Blog description cannot be empty.',
         'any.required': 'Blog description is required.',
       }),
-      isPublished:  Joi.boolean().valid(true, false).required(),
+      isPublished:  Joi.number().integer().valid(1, 0).required(),
       posted_by: Joi.string().default('admin')
     });
     return schema.validate(data);
@@ -34,6 +34,7 @@ const blogPostValidation = (data) => {
     return schema.validate(data);
   };
   const deleteBlogValidation = (data) => {
+    console.log("deleteData", data)
     const schema = Joi.object({
       blogId: Joi.string().required(),
      

@@ -31,7 +31,7 @@ const createProject = async(request, response) =>{
     }
    else{
     if(!request.files || Object.keys(request.files).length === 0){
-        EventEmitter.errorEmitter("uploadGallery", [
+        EventEmitter.errorEmitter("createProject", [
             apiName,
             StatusCode.apiVersion.VERSION1 + request.route.path,
             StatusCode.errorMessage.IMAGE_FILE_REQUIRED,
@@ -59,106 +59,88 @@ const createProject = async(request, response) =>{
            
         },
     });
-   }else if(!request.files?.architectureMap){
-    EventEmitter.errorEmitter("createProject", [
-        apiName,
-        StatusCode.apiVersion.VERSION1 + request.route.path,
-        StatusCode.errorMessage.ARCHITECTURE_IMAGE_FILE_REQUIRED,
-        StatusCode.statusCode.BAD_REQUEST,
-    ]);
-    return response.status(StatusCode.statusCode.BAD_REQUEST).send({
-        status: StatusCode.statusCode.BAD_REQUEST,
-        data: {
-            message: StatusCode.errorMessage.ARCHITECTURE_IMAGE_FILE_REQUIRED,
-           
-        },
-    });
-   }else if(!request.files?.projectPdf){
-    EventEmitter.errorEmitter("createProject", [
-        apiName,
-        StatusCode.apiVersion.VERSION1 + request.route.path,
-        StatusCode.errorMessage.PROJECT_PDF_REQUIRED,
-        StatusCode.statusCode.BAD_REQUEST,
-    ]);
-    return response.status(StatusCode.statusCode.BAD_REQUEST).send({
-        status: StatusCode.statusCode.BAD_REQUEST,
-        data: {
-            message: StatusCode.errorMessage.PROJECT_PDF_REQUIRED,
-           
-        },
-    });
    }else{
-    
-    let projecImageError = validateAndProcessFile(request.files?.projectImage);
-    let architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
-    let projectPdfError = validateAndProcessFile(request.files?.projectPdf, [".pdf"], 5);
-    let errors = projecImageError.concat(architectureMapImageError, projectPdfError)
-    console.log("error",  errors)
-        if(projecImageError.length > 0 || architectureMapImageError?.length > 0 || projectPdfError?.length > 0){
-            console.log("Dinesh Enters herer")
-            EventEmitter.errorEmitter("createProject", [
-                apiName,
-                StatusCode.apiVersion.VERSION1 + request.route.path,
-                projecImageError,
-                StatusCode.statusCode.BAD_REQUEST,
-            ]);
-            return response.status(StatusCode.statusCode.BAD_REQUEST).send({
-                status: StatusCode.statusCode.BAD_REQUEST,
-                data: {
-                    message: errors,
-                   
-                },
-            });
-        }else{
-            
-                return new Promise(function () {
-                  ProjectService.createProjectServices(request).then((result) => {
-                      console.log("result", result)
-                      if(result){
-                        EventEmitter.auditEmitter("createProject", [
-                            apiName,
-                            StatusCode.apiVersion.VERSION1 + request.route.path,
-                            "list",
-                            StatusCode.statusCode.SUCCESS,
-                        ]);
-                        return response.status(StatusCode.statusCode.SUCCESS).send({
-                            status: StatusCode.statusCode.SUCCESS,
-                            data: {
-                                message: StatusCode.successMessage.SUCCESSFULL,
-                                result: result,
-                            },
-                        });
-                      }else if(!result){
-                        EventEmitter.auditEmitter("createProject", [
-                            apiName,
-                            StatusCode.apiVersion.VERSION1 + request.route.path,
-                           "INTERNAL SERVER ERROR",
-                            StatusCode.statusCode.INTERNAL_SERVER_ERROR,
-                        ]);
-                        return response.status(StatusCode.statusCode.SUCCESS).send({
-                            status: StatusCode.statusCode.INTERNAL_SERVER_ERROR,
-                            data: {
-                                message: StatusCode.successMessage.INTERNAL_SERVER_ERROR,
-                               
-                            },
-                        });
-                      }
-                     
-                  });
-              }).catch((err) => {
-                  EventEmitter.errorEmitter("createProject", [
-                      apiName,
-                      StatusCode.apiVersion.VERSION1 + request.route.path,
-                      err.message,
-                      StatusCode.statusCode.BAD_REQUEST,
-                  ]);
-                  return response.status(StatusCode.statusCode.BAD_REQUEST).send({
-                      status: StatusCode.statusCode.BAD_REQUEST,
-                      data: { message: err.message },
-                  });
+  
+            let projecImageError = []
+            let projectPdfImageError = []
+             let architectureMapImageError = [];
+        
+            if(request.files?.projectImage){
+                projecImageError = validateAndProcessFile(request.files?.projectImage);
+            }
+            if(request.files?.architectureMap){
+                architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
+            }
+            if(request.files?.projectPdf){
+                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 5]);
+            }
+           let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
+   
+           
+   if(errors?.length > 0){
+       EventEmitter.errorEmitter("createProject", [
+           apiName,
+           StatusCode.apiVersion.VERSION1 + request.route.path,
+           errors,
+           StatusCode.statusCode.BAD_REQUEST,
+       ]);
+       return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+           status: StatusCode.statusCode.BAD_REQUEST,
+           data: {
+               message: errors,
+              
+           },
+       });
+   }else{
+    console.log("Dinesh")
+    return new Promise(function () {
+        ProjectService.createProjectServices(request).then((result) => {
+            console.log("result", result)
+            if(result){
+              EventEmitter.auditEmitter("createProject", [
+                  apiName,
+                  StatusCode.apiVersion.VERSION1 + request.route.path,
+                  "list",
+                  StatusCode.statusCode.SUCCESS,
+              ]);
+              return response.status(StatusCode.statusCode.SUCCESS).send({
+                  status: StatusCode.statusCode.SUCCESS,
+                  data: {
+                      message: StatusCode.successMessage.SUCCESSFULL,
+                      result: result,
+                  },
               });
-               
-        }
+            }else if(!result){
+              EventEmitter.auditEmitter("createProject", [
+                  apiName,
+                  StatusCode.apiVersion.VERSION1 + request.route.path,
+                 "INTERNAL SERVER ERROR",
+                  StatusCode.statusCode.INTERNAL_SERVER_ERROR,
+              ]);
+              return response.status(StatusCode.statusCode.SUCCESS).send({
+                  status: StatusCode.statusCode.INTERNAL_SERVER_ERROR,
+                  data: {
+                      message: StatusCode.successMessage.INTERNAL_SERVER_ERROR,
+                     
+                  },
+              });
+            }
+           
+        });
+    }).catch((err) => {
+        EventEmitter.errorEmitter("createProject", [
+            apiName,
+            StatusCode.apiVersion.VERSION1 + request.route.path,
+            err.message,
+            StatusCode.statusCode.BAD_REQUEST,
+        ]);
+        return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+            status: StatusCode.statusCode.BAD_REQUEST,
+            data: { message: err.message },
+        });
+    });
+   }
+ 
    }
      
       
@@ -199,6 +181,7 @@ const commonUpdateLogic = async(request, response, apiName) =>{
 const updateProject = async(request, response) =>{
     const {error} = updateProjectValidation(request.body)
     let apiName = "updateProject";
+    console.log("inside update")
     if (error) {
         console.log("error", error)
         if (error.hasOwnProperty("details")) {
@@ -208,11 +191,11 @@ const updateProject = async(request, response) =>{
                 error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, ""),
                 StatusCode.statusCode.BAD_REQUEST,
             ]);
-            return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+            return response.status(StatusCode.statusCode.SUCCESS).send({
                 status: StatusCode.statusCode.BAD_REQUEST,
                 data: {
-                    message: StatusCode.successMessage.FAIL,
-                    result: error.details[0].message.replace(
+                    result: StatusCode.successMessage.FAIL,
+                    message: error.details[0].message.replace(
                         /[^a-zA-Z0-9 ]/g,
                         ""
                     ),
@@ -226,7 +209,7 @@ const updateProject = async(request, response) =>{
     }
     else{
      
-            console.log("enters hererere 1")
+            console.log("enters hererere 1 Dinesh")
             let projecImageError = []
             let projectPdfImageError = []
              let architectureMapImageError = [];

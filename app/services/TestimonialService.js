@@ -28,7 +28,7 @@ const updateTestimonialService= async (request) => {
 
   const deleteTestimonialService= async (request) => {
     return new Promise((resolve, reject) => {
-      TestimonialModel.getTestimonialList(request)
+      TestimonialModel.deleteTestimonyById(request)
         .then((result) => {
           resolve(result)
         })

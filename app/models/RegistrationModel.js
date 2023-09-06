@@ -1,6 +1,65 @@
 const { closeConnection, dbConn } = require("../utils/database/SqlConnection");
 
 
+  // const Registration = async (request) => {
+  //   let email = request.body.emailId;
+  //   let name = request.body.name;
+  //   let projectName = request.body.projectName;
+  //   let message = request.body.message;
+  //   let phoneNumber = request.body.phoneNumber;
+  //   return new Promise(function (resolve, reject) {
+  //     const sqlQuery = `CALL procEmailExistCheck(?)`;
+  
+  //     dbConn.getConnection((err, connection) => {
+  //       if (err) {
+  //         console.log("Database Connection Failed !!!", err);
+  //       } else {
+  //         connection.query(sqlQuery,[email], (err, result) => {
+  //           closeConnection(connection);
+  //           console.log("Result", result[0].length)
+  //           if (err) {
+  //             return reject(err);
+  //           } else if (result[0].length != 0) {
+  //               console.log("entered herer")
+  //             let result = 1;
+  
+  //             return resolve(result);
+  //           } else {
+  //               try {
+  //                 const sqlQuery1 = `CALL procRegistration(?, ?, ?, ?, ?)`;
+                 
+  //                 dbConn.getConnection((err, connection) => {
+  //                   if (err) {
+  //                     console.log("Database not connect !!", err);
+  //                   } else {
+  //                     connection.query(
+  //                       sqlQuery1, [
+  //                           name,
+  //                           email,
+  //                           projectName, 
+  //                           message,
+  //                           phoneNumber
+  //                       ],
+  //                       (err, result) => {
+  //                         closeConnection(connection);
+  //                         if (err) {
+  //                           return reject(err);
+  //                         }
+  //                         resolve(result);
+  //                       }
+  //                     );
+  //                   }
+  //                 });
+  //               } catch (error) {
+  //                 return reject(error);
+  //               }   
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // };
+
   const Registration = async (request) => {
     let email = request.body.emailId;
     let name = request.body.name;
@@ -8,55 +67,34 @@ const { closeConnection, dbConn } = require("../utils/database/SqlConnection");
     let message = request.body.message;
     let phoneNumber = request.body.phoneNumber;
     return new Promise(function (resolve, reject) {
-      const sqlQuery = `CALL procEmailExistCheck(?)`;
-  
-      dbConn.getConnection((err, connection) => {
-        if (err) {
-          console.log("Database Connection Failed !!!", err);
-        } else {
-          connection.query(sqlQuery,[email], (err, result) => {
-            closeConnection(connection);
-            console.log("Result", result[0].length)
-            if (err) {
-              return reject(err);
-            } else if (result[0].length != 0) {
-                console.log("entered herer")
-              let result = 1;
-  
-              return resolve(result);
-            } else {
-                try {
-                  const sqlQuery1 = `CALL procRegistration(?, ?, ?, ?, ?)`;
-                 
-                  dbConn.getConnection((err, connection) => {
-                    if (err) {
-                      console.log("Database not connect !!", err);
-                    } else {
-                      connection.query(
-                        sqlQuery1, [
-                            name,
-                            email,
-                            projectName, 
-                            message,
-                            phoneNumber
-                        ],
-                        (err, result) => {
-                          closeConnection(connection);
-                          if (err) {
-                            return reject(err);
-                          }
-                          resolve(result);
-                        }
-                      );
-                    }
-                  });
-                } catch (error) {
-                  return reject(error);
-                }   
-            }
-          });
-        }
-      });
+      try {
+        const sqlQuery1 = `CALL procRegistration(?, ?, ?, ?, ?)`;
+       
+        dbConn.getConnection((err, connection) => {
+          if (err) {
+            console.log("Database not connect !!", err);
+          } else {
+            connection.query(
+              sqlQuery1, [
+                  name,
+                  email,
+                  projectName, 
+                  message,
+                  phoneNumber
+              ],
+              (err, result) => {
+                closeConnection(connection);
+                if (err) {
+                  return reject(err);
+                }
+                resolve(result);
+              }
+            );
+          }
+        });
+      } catch (error) {
+        return reject(error);
+      } 
     });
   };
 
@@ -85,7 +123,28 @@ const { closeConnection, dbConn } = require("../utils/database/SqlConnection");
     });
   };
 
+  const getAllOutReachCount = async (request) => {
+    return new Promise(function (resolve, reject) {
+      const SqlQuery = `CALL procCountOutReach()`;
+      dbConn.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+        } else {
+          connection.query(SqlQuery, (err, result) => {
+            closeConnection(connection);
+            if (err) {
+              reject(err);
+            } 
+            resolve(result[0][0])
+            console.log("result", result[0][0])
+          });
+        }
+      });
+    });
+  };
+
   module.exports = {
     Registration,
-    getEnquiryList
+    getEnquiryList,
+    getAllOutReachCount
   }

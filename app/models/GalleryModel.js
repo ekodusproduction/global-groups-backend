@@ -47,7 +47,7 @@ const uploadGallery = async (request) => {
         }
    
  const deleteGalleryItemById = async (request) => {
-            let galleryItemId = request.body.galleryItemId;
+            let galleryItemId = request.params.galleryItemId;
             return new Promise(function (resolve, reject) {
 
                 const sqlQuery = `CALL procCheckGalleryItemExist(?)`

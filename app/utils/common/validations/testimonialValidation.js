@@ -17,8 +17,9 @@ const testimonialValidation = (data) => {
 
 
   const deleteTestimonyValidation = (data) => {
+    console.log("data", data)
     const schema = Joi.object({
-      id: Joi.string().required().min(3).max(200).messages({
+      id: Joi.string().required().messages({
         'string.base': 'Testimony Id should be a string.',
         'string.empty': 'Testimony Idcannot be empty.',
         'any.required': 'Testimony Id is required.',

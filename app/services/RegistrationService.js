@@ -21,7 +21,18 @@ const getEnquiryListServices = (request) =>{
     })
 }
 
+const getOutReachCountServices = (request) =>{
+    return new Promise((resolve, reject)=>{
+        RegistrationModel.getAllOutReachCount(request).then((result)=>{
+            resolve(result)
+        }).catch((error)=>{
+            reject(error)
+        })
+    })
+}
+
 module.exports = {
     RegistrationServices,
-    getEnquiryListServices
+    getEnquiryListServices,
+    getOutReachCountServices
 }

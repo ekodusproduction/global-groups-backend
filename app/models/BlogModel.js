@@ -28,7 +28,7 @@ const postBlog = async(request) => {
         if (err) {
           console.log("Database not connected !!", err);
         } else {
-          connection.query(subSqlQuery,[Id, title, slug, blogImage, summary, JSON.stringify(description), flag, posted_by] ,async(err, result) => {
+          connection.query(subSqlQuery,[Id, title, slug, blogImage, summary, JSON.stringify(description), isPublished, posted_by] ,async(err, result) => {
             console.log("result", result)
             closeConnection(connection);
             if (result) {
@@ -45,23 +45,43 @@ const postBlog = async(request) => {
   };
   const deleteBlogPost = (request) => {
     return new Promise(function (resolve, reject) {
-        let {postId } = request.body
-      const subSqlQuery = `CALL procDeleteBlog(?)`;
-      dbConn.getConnection((err, connection) => {
-        if (err) {
-          console.log("Database not connected !!", err);
-        } else {
-          connection.query(subSqlQuery,[postId] ,(err, result) => {
-            console.log("result", result)
-            closeConnection(connection);
-            if (result) {
-              resolve(result);
-            } else {
-              reject(err);
-            }
-          });
+        let {blogId } = request.params;
+        
+        const sqlQuery = `CALL procCheckBlogItemExist(?)`;
+        dbConn.getConnection((err, connection) => {
+          if (err) {
+            console.log("Database Connection Failed !!!", err);
+          } else {
+            connection.query(sqlQuery,[blogId], async (err, result) => {
+              closeConnection(connection);
+              console.log("Result chek", result)
+                if(result[0][0].itemCount === 1){
+                  dbConn.getConnection((err, connection) => {
+                    if (err) {
+                      console.log("Database not connected !!", err);
+                    } else {
+                      const subSqlQuery = `CALL procDeleteBlog(?)`;
+                      connection.query(subSqlQuery,[blogId] ,(err, result) => {
+                        console.log("result", result)
+                        closeConnection(connection);
+                        if (result) {
+                          let obj = {notFound: false, deleted: true,  message: `Blog Deleted Successfully for Id ${blogId}`}
+                          resolve(obj);
+                        } else {
+                          reject(err);
+                        }
+                      });
+                    }
+                  });
+                }else if(result[0][0].itemCount === 0){
+                    let obj = { notFound: true, deleted: false, message: `No Blog Found with Id ${blogId} to Delete`}
+                        resolve(obj)
+                }
+            })
         }
-      });
+    })
+     
+     
     });
   };
 
@@ -97,7 +117,7 @@ const postBlog = async(request) => {
                     console.log("Database not connect !!", err);
                   } else {
                     connection.query(
-                        subSqlQuery,[postId, title, slug, blogImage, summary, description, flag, updatedDateTime],
+                        subSqlQuery,[postId, title, slug, blogImage, summary, description, isPublished, updatedDateTime],
                       async(err, result1) => {
                         closeConnection(connection);
                         if (err) {
@@ -147,6 +167,29 @@ const postBlog = async(request) => {
     });
   };
 
+  const getAllBlogPostListAdmin = async (request) => {
+    let pageNumber =  request.params.pageNumber ? parseInt(request.params.pageNumber) : 1;;
+    let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 10
+    return new Promise(function (resolve, reject) {
+      const SqlQuery = `CALL procGetAllBlogPostListForAdmin(?, ?)`;
+      dbConn.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+        } else {
+          connection.query(SqlQuery, [pageNumber,pageSize ], (err, result) => {
+            closeConnection(connection);
+            if (err) {
+              reject(err);
+            } 
+            resolve(result[0])
+            console.log("result", result[0])
+          });
+        }
+      });
+    });
+  };
+
+
 
   const getBlogDetailsById = (request) => {
     return new Promise(function (resolve, reject) {
@@ -176,5 +219,6 @@ const postBlog = async(request) => {
     deleteBlogPost,
     updateBlogPostById,
     getAllBlogPostList, 
-    getBlogDetailsById
+    getBlogDetailsById,
+    getAllBlogPostListAdmin
   }

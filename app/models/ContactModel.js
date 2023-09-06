@@ -46,6 +46,27 @@ const submitContact = (request) => {
     });
   };
 
+
+  const getAllEnquiryCount = async (request) => {
+    return new Promise(function (resolve, reject) {
+      const SqlQuery = `CALL procCountEnquiry()`;
+      dbConn.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+        } else {
+          connection.query(SqlQuery, (err, result) => {
+            closeConnection(connection);
+            if (err) {
+              reject(err);
+            } 
+            resolve(result[0][0])
+            console.log("result", result[0][0])
+          });
+        }
+      });
+    });
+  };
+
   module.exports = {
-    submitContact, getContactList
+    submitContact, getContactList, getAllEnquiryCount
   }

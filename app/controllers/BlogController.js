@@ -55,7 +55,7 @@ const PostBlog = (request, response) =>{
 }
 const deleteBlogPost = (request, response) =>{
     let apiName = "deleteBlogPost";
-    const { error } = deleteBlogValidation(request.body);
+    const { error } = deleteBlogValidation(request.params);
     if (error) {
         console.log("error", error)
         if (error.hasOwnProperty("details")) {
@@ -78,25 +78,36 @@ const deleteBlogPost = (request, response) =>{
         }
     } else {
         return new Promise(function () {
-            BlogService.BlogPostService(request).then((result) => {
+            BlogService.DeleteBlogPostService(request).then((result) => {
                 console.log("result", result)
-                if(result){
+                if(result?.notFound){
+                    EventEmitter.errorEmitter("deleteBlogPost", [
+                        apiName,
+                        StatusCode.apiVersion.VERSION1 + request.route.path,
+                        "delete",
+                        StatusCode.statusCode.DATA_NOT_FOUND,
+                    ]);
+                    return response.status(StatusCode.statusCode.SUCCESS).send({
+                        status: StatusCode.statusCode.DATA_NOT_FOUND,
+                        data: {
+                            result: StatusCode.successMessage.FAIL,
+                            message: result?.message,
+                        },
+                    });
+                }else if(!result?.notFound && result?.deleted){
                     EventEmitter.auditEmitter("deleteBlogPost", [
                         apiName,
                         StatusCode.apiVersion.VERSION1 + request.route.path,
-                        "Add",
+                        "delete",
                         StatusCode.statusCode.SUCCESS,
                     ]);
                     return response.status(StatusCode.statusCode.SUCCESS).send({
                         status: StatusCode.statusCode.SUCCESS,
                         data: {
-                            message:
-                                StatusCode.successMessage
-                                    .BLOG_POSTED_SUCCESSFULLY,
+                            result: StatusCode.successMessage.SUCCESSFULL,
+                            message: result?.message,
                         },
                     });
-                }else{
-
                 }
                   
                    
@@ -261,6 +272,40 @@ const commonUpdateLogic = (request, respose, apiName) =>{
 }
 
 
+const getBlogPostListForAdmin = (request, response) =>{
+    let apiName = "getBlogPostListForAdmin";
+    return new Promise(function () {
+        BlogService.getBlogPostListAdminService(request).then((result) => {
+            console.log("result", result)
+        
+                EventEmitter.auditEmitter("getBlogPostListForAdmin", [
+                    apiName,
+                    StatusCode.apiVersion.VERSION1 + request.route.path,
+                    "Update",
+                    StatusCode.statusCode.SUCCESS,
+                ]);
+                return response.status(StatusCode.statusCode.SUCCESS).send({
+                    status: StatusCode.statusCode.SUCCESS,
+                    data: result
+                });
+              
+        });
+    }).catch((err) => {
+        EventEmitter.errorEmitter("getBlogPostListForAdmin", [
+            apiName,
+            StatusCode.apiVersion.VERSION1 + request.route.path,
+            err,
+            StatusCode.statusCode.BAD_REQUEST,
+        ]);
+
+        return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+            status: StatusCode.statusCode.BAD_REQUEST,
+            data: { message: err },
+        });
+    });
+    
+}
+
 const getBlogPostList = (request, response) =>{
     let apiName = "getBlogPostList";
     return new Promise(function () {
@@ -377,5 +422,6 @@ module.exports = {
     deleteBlogPost,
     updateBlogPost,
     getBlogPostList,
-    getBlogPostById
+    getBlogPostById,
+    getBlogPostListForAdmin
 }

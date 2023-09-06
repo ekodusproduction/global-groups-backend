@@ -67,4 +67,8 @@ Router.post("/contact/addContact",  (response, request) => {
 Router.get("/contact/getContactList",  (response, request) => {
     ContactController.getContactList(response, request);
 });
+
+Router.get("/contact/getEnquiryCount",  (response, request) => {
+    ContactController.getAllEnquiryCount(response, request);
+});
 module.exports = Router;

@@ -67,6 +67,54 @@ const Conatact = (request, response) =>{
     }
 }
 
+const getAllEnquiryCount = async(request, response)=>{
+    let apiName = "getAllEnquiryCount"
+    return new Promise(function () {
+        ContactService.getEnquiryCountService(request).then((result) => {
+            console.log("result", result)
+          if(result.length === 0){
+            EventEmitter.auditEmitter("getAllEnquiryCount", [
+                apiName,
+                StatusCode.apiVersion.VERSION1 + request.route.path,
+                "list",
+                StatusCode.statusCode.SUCCESS,
+            ]);
+            return response.status(StatusCode.statusCode.SUCCESS).send({
+                status: StatusCode.statusCode.SUCCESS,
+                data: {
+                    message: StatusCode.errorMessage.DATA_NOT_FOUND,
+                    result: result,
+                },
+            });
+          }
+            EventEmitter.auditEmitter("getAllEnquiryCount", [
+                apiName,
+                StatusCode.apiVersion.VERSION1 + request.route.path,
+                "list",
+                StatusCode.statusCode.SUCCESS,
+            ]);
+            return response.status(StatusCode.statusCode.SUCCESS).send({
+                status: StatusCode.statusCode.SUCCESS,
+                data: {
+                    message: StatusCode.successMessage.SUCCESSFULL,
+                    result: result,
+                },
+            });
+        });
+    }).catch((err) => {
+        EventEmitter.errorEmitter("getAllEnquiryCount", [
+            apiName,
+            StatusCode.apiVersion.VERSION1 + request.route.path,
+            err.message,
+            StatusCode.statusCode.BAD_REQUEST,
+        ]);
+        return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+            status: StatusCode.statusCode.BAD_REQUEST,
+            data: { message: err.message },
+        });
+    });
+}
+
 
 const getContactList = (request, response) =>{
     let apiName = "contactList";
@@ -128,5 +176,6 @@ const getContactList = (request, response) =>{
 
 module.exports = {
     Conatact,
-    getContactList
+    getContactList,
+    getAllEnquiryCount
 }

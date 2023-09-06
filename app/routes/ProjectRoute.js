@@ -168,7 +168,7 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 });
 
 
-Router.get("/project/getAllProject", (response, request) => {
+Router.get("/project/getAllProject", AppAuth, (response, request) => {
     PropertyController.getAllProject(response, request);
 });
 
@@ -180,7 +180,7 @@ Router.get("/project/getProjectById/:projectId", (response, request) => {
     PropertyController.getProjectDetailsById(response, request);
 });
 
-Router.get("/project/getProjectBasicById/:projectId", (response, request) => {
+Router.get("/project/getProjectBasicById/:projectId",  (response, request) => {
     PropertyController.getProjectBasicDetailsById(response, request);
 });
 

@@ -5,22 +5,28 @@ const fs = require('fs')
 const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink)
 const getAllProjectList = async (request) => {
-  let pageNumber =  request.params.pageNumber ? parseInt(request.params.pageNumber) : 1;;
-  let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 10
-
+  let pageNumber =  request.query.pageNumber ? parseInt(request.query.pageNumber) : 1;;
+  let pageSize = request.query.pageSize ? parseInt(request.query?.pageSize): 10;
+  console.log("reuest", request.query)
+let isActive  = request?.query?.isactive ? request?.query?.isactive : null
+console.log("isActive", isActive)
   return new Promise(function (resolve, reject) {
-    const SqlQuery = `CALL procGetAllProjectList(?, ?)`;
+    const SqlQuery = `CALL procGetAllProjectList(?, ?, ?)`;
     dbConn.getConnection((err, connection) => {
       if (err) {
         reject(err);
       } else {
-        connection.query(SqlQuery, [pageNumber,pageSize ], (err, result) => {
+        connection.query(SqlQuery,
+           [pageNumber,pageSize , isActive],
+            (err, result) => {
           closeConnection(connection);
           if (err) {
             reject(err);
           } 
+        // console.log("result", result)
+         console.log("result", result[0])
           resolve(result[0])
-          console.log("result", result[0])
+         
         });
       }
     });
@@ -124,23 +130,49 @@ const getAllResedentialProject = (request) => {
 };
 
 
-const createProject = (request) => {
-  console.log("files",request.projectImage)
+const createProject = async(request) => {
+
  let {projectName, area, address, city, state, pinCode, location, description, type, status, flatSize, floors} = request?.body
  let Id = uuidv4()
  Id = Id.replace(/-/g, "");
  console.log("id", Id)
+ let projectPdf = null
+ let architectureImage = null
  const projectImageFile = request?.files?.projectImage
- const projectImage =  projectImageFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageFile?.name.split(".")[1].trim();
- const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
 
- const architectureImageFile = request?.files?.architectureMap
- const architectureImage =  architectureImageFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageFile?.name.split(".")[1].trim();
- const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
- 
- const projectPdfFile = request?.files?.projectPdf
- const projectPdf =  projectPdfFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectPdfFile?.name.split(".")[1].trim();
- const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
+        let  projectImageFileWithoutExtention = path.parse(projectImageFile?.name).name
+        console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
+        const projectImageExtension = path.extname(projectImageFile.name);
+        console.log("fileExtension", projectImageExtension)
+         const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
+        const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+       const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
+
+
+
+ if(request?.files?.architectureMap){
+  const architectureImageFile = request?.files?.architectureMap
+  let  architectureImageFileWithoutExtention = path.parse(architectureImageFile?.name).name
+        console.log("architectureImageFileWithoutExtention", architectureImageFileWithoutExtention)
+        const architectureImageExtension = path.extname(architectureImageFile.name);
+        console.log("fileExtension", architectureImageExtension)
+         const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
+         architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
+       const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
+       architectureImageFile.mv(architetureImagePath)
+}
+
+if(request?.files?.projectPdf){
+  const brochurePdfFile = request?.files?.projectPdf
+  let  brochureFileWithoutExtention = path.parse(brochurePdfFile?.name).name
+        console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
+        const brochureExtension = path.extname(brochurePdfFile.name);
+        console.log("fileExtension", brochureExtension)
+         const brochurePdfCleanName = brochureFileWithoutExtention.replace(/\s/g, "_");
+      projectPdf =  brochurePdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +brochureExtension;
+     const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
+     brochurePdfFile.mv(pdfPath)
+}
   return new Promise(function (resolve, reject) {
     const subSqlQuery = `CALL procCreateProperty(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     dbConn.getConnection((err, connection) => {
@@ -174,8 +206,7 @@ const createProject = (request) => {
                       reject(result);
                     } else {
                       projectImageFile.mv(projectImagefilePath)
-                      architectureImageFile.mv(architetureImagePath)
-                      projectPdfFile.mv(pdfPath)
+                     
                       let result = true;
                       resolve(result);
                     }
@@ -226,15 +257,22 @@ const updateProject = async (request) => {
               
                 if(request?.files?.architectureMap){
                   const architectureImageFile = request?.files?.architectureMap
-                  await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].architectureMap))
+                  if(result[0][0]?.architectureMap !== null){
+                    await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].architectureMap))
+                  }
+                
                    architectureMap =  architectureImageFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageFile?.name.split(".")[1].trim();
                   const architetureImagePath =  path.join(__dirname, '../../images/'+architectureMap)
+                  console.log("Filename", architectureMap)
                   architectureImageFile.mv(architetureImagePath)
                 }
               
                 if(request?.files?.projectPdf){
                   const projectPdfFile = request?.files?.projectPdf
-                  await unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
+                  if(result[0][0]?.projectPdf !== null){
+                    await unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
+                  }
+                  
                   projectPdf =  projectPdfFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectPdfFile?.name.split(".")[1].trim();
                   const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
                   projectPdfFile.mv(pdfPath)

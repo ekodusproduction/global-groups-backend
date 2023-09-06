@@ -74,6 +74,10 @@ Router.get("/registration/getEnquiryList", (response, request) => {
 });
 
 
+Router.get("/registration/getOutReachCount", (response, request) => {
+    RegistrationController.getAllOutReachCount(response, request);
+});
+
 
 
 

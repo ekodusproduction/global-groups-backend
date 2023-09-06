@@ -62,6 +62,57 @@ const addTestimony = (request) => {
     });
   };
 
+
+  const deleteTestimonyById = async (request) => {
+    let {id} = request?.params
+  console.log("id", request?.params)
+    return new Promise(function (resolve, reject) {
+  
+        const sqlQuery = `CALL procCheckTestimonyItemExist(?)`
+        dbConn.getConnection((err, connection) => {
+          if (err) {
+            console.log("Database Connection Failed !!!", err);
+          } else {
+            connection.query(sqlQuery,[parseInt(id)], async (err, result) => {
+              closeConnection(connection);
+              console.log("Results", result)
+             
+                if(result[0][0].itemCount === 1){
+                       try {
+                const subSqlQuery = `CALL procDeleteTestimony(?)`;
+                dbConn.getConnection((err, connection) => {
+                  if (err) {
+                    console.log("Database not connect !!", err);
+                  } else {
+                    connection.query(
+                        subSqlQuery,[parseInt(id)],
+                      (err, result1) => {
+                        closeConnection(connection);
+                        if (err) {
+                          return reject(err);
+                        }
+                        
+                        let obj = {flag : true, notFound: false, message: `Testimony Deleted Successfully for Id ${ typeof id}`}
+                        resolve(obj);
+                      }
+                    );
+                  }
+                });
+              } catch (error) {
+                return reject(error);
+              } 
+                }else{
+                    let obj = {flag : false ,notFound: false , message: `Testimony Id ${id} does not Exist`}
+                    resolve(obj);
+                }
+            })
+        }
+    })
+                 
+            
+          });
+        }
+  
   module.exports = {
-    addTestimony, getTestimonyList
+    addTestimony, getTestimonyList, deleteTestimonyById
   }

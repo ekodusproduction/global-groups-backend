@@ -272,7 +272,9 @@ const getAllAmenitiesByProjectId = async(request, response) =>{
         return new Promise(function () {
             AmenityService.getAllAmenitiesByProjectIdService(request).then((result) => {
                 console.log("getAllAmenityResult", result[0])
-              if(result[0][0]?.length > 0){
+                console.log(result[0].length)
+              if(result[0].length > 0){
+                console.log("enters in having data", result[0][0]?.amenities)
                 EventEmitter.auditEmitter("getAllAmenitiesByProjectId", [
                     apiName,
                     StatusCode.apiVersion.VERSION1 + request.route.path,
@@ -283,10 +285,11 @@ const getAllAmenitiesByProjectId = async(request, response) =>{
                     status: StatusCode.statusCode.SUCCESS,
                     data: {
                         message: StatusCode.successMessage.SUCCESSFULL,
-                        result: result[0]?.amenities,
+                        result: result[0][0]?.amenities,
                     },
                 });
               }else{
+                console.log("entered in else", result[0])
                 EventEmitter.auditEmitter("getAllAmenitiesByProjectId", [
                     apiName,
                     StatusCode.apiVersion.VERSION1 + request.route.path,

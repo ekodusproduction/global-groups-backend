@@ -186,11 +186,16 @@ const uploadGallery = async(request, response) =>{
                 },
             })
         }
-        const fileName =  files?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +files?.name.split(".")[1].trim();
+        let  fileNameWithoutExtension = path.parse(files).name
+        console.log("filenamewithoutExtension", fileNameWithoutExtension)
+        const fileExtension = path.extname(files.name);
+        console.log("fileExtension", fileExtension)
+         const cleanName = fileNameWithoutExtension.replace(/\s/g, "_");
+         console.log("cleanName", cleanName)
+        const fileName = cleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +fileExtension;
         const FilePath =  path.join(__dirname, '../../images/'+fileName)
         files.mv(FilePath)
-        modifiedFileName.push(fileName)
-        request.modifiedFileName = modifiedFileName; 
+        request.modifiedFileName = fileName; 
        commonUploadLogic(request, response, apiName)
             
       }
@@ -201,7 +206,7 @@ const uploadGallery = async(request, response) =>{
 
 const deleteGalleryItem = async(request, response) =>{
     console.log("data",request.body)
-    const {error} = galleryItemDeleteValidation(request.body)
+    const {error} = galleryItemDeleteValidation(request.params)
     let apiName = "uploadGallery";
     if (error) {
         console.log("error", error)

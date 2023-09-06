@@ -115,7 +115,7 @@ Router.get("/gallery/getGalleryList/:projectId", (response, request) => {
 });
 
 
-Router.delete("/gallery/delteGalleryItem",  async(response, request) => {
+Router.delete("/gallery/deleteGalleryItem/:galleryItemId",  async(response, request) => {
     GalleryController.deleteGalleryItem(response, request);
    
 });
