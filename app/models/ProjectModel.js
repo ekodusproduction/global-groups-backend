@@ -231,6 +231,7 @@ const updateProject = async (request) => {
   let {project_id, projectName, area, address, city, state, pinCode, 
     location, description, type, status, flatSize, 
     floors, projectImage, architectureMap, projectPdf} = request?.body
+    console.log("location",address, city, state, pinCode, location, project_id )
   const today = new Date()
   
   return new Promise(function (resolve, reject) {
@@ -247,12 +248,18 @@ const updateProject = async (request) => {
               
             
                 if(request.files?.projectImage){
-                  const projectImageFile = request?.files?.projectImage
-                  await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].projectimage))
-                   projectImage =  projectImageFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageFile?.name.split(".")[1].trim();
-                  const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
-                   console.log("path", path.join(__dirname, '../../images/'+projectImage))
-                  projectImageFile.mv(projectImagefilePath)
+                   const projectImageFile = request?.files?.projectImage;
+                    await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].projectimage))
+                       let  projectImageWithoutExtension = path.parse(projectImageFile?.name).name
+                         console.log("brochureFileWithoutExtention", projectImageWithoutExtension)
+                         const projectImageExtension = path.extname(projectImageFile.name);
+                         console.log("projectImageExtension", projectImageExtension)
+                          const projectImageCleanName = projectImageWithoutExtension.replace(/\s/g, "_");
+                          console.log("projectImage", projectImage)
+                          projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+                          console.log("projectImage", projectImage)
+                      const projectImagePath =  path.join(__dirname, '../../images/'+projectImage)
+                  projectImageFile.mv(projectImagePath)
                 }
               
                 if(request?.files?.architectureMap){
@@ -260,11 +267,15 @@ const updateProject = async (request) => {
                   if(result[0][0]?.architectureMap !== null){
                     await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].architectureMap))
                   }
-                
-                   architectureMap =  architectureImageFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageFile?.name.split(".")[1].trim();
-                  const architetureImagePath =  path.join(__dirname, '../../images/'+architectureMap)
-                  console.log("Filename", architectureMap)
-                  architectureImageFile.mv(architetureImagePath)
+
+                  let  architectureImageWithoutExtension = path.parse(architectureImageFile?.name).name
+                  console.log("architectureImageWithoutExtension", architectureImageWithoutExtension)
+                  const architectureImageExtension = path.extname(architectureImageFile.name);
+                  console.log("projectPdfExtension", architectureImageExtension)
+                   const architectureCleanName = architectureImageWithoutExtension.replace(/\s/g, "_");
+                   architectureMap =  architectureCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
+               const architechtureImagePath =  path.join(__dirname, '../../images/'+architectureMap)
+                  architectureImageFile.mv(architechtureImagePath)
                 }
               
                 if(request?.files?.projectPdf){
@@ -272,8 +283,13 @@ const updateProject = async (request) => {
                   if(result[0][0]?.projectPdf !== null){
                     await unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
                   }
-                  
-                  projectPdf =  projectPdfFile?.name   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectPdfFile?.name.split(".")[1].trim();
+
+                  let  projectPdfWithoutExtension = path.parse(projectPdfFile?.name).name
+                  console.log("brochureFileWithoutExtention", projectPdfWithoutExtension)
+                  const projectPdfExtension = path.extname(projectPdfFile.name);
+                  console.log("projectPdfExtension", projectPdfExtension)
+                   const projectPdfCleanName = projectPdfWithoutExtension.replace(/\s/g, "_");
+                   projectPdf =  projectPdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectPdfExtension;
                   const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
                   projectPdfFile.mv(pdfPath)
                 }

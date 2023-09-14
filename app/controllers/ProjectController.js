@@ -72,7 +72,7 @@ const createProject = async(request, response) =>{
                 architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
             }
             if(request.files?.projectPdf){
-                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 5]);
+                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 25]);
             }
            let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
    
@@ -221,7 +221,7 @@ const updateProject = async(request, response) =>{
                 architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
             }
             if(request.files?.projectPdf){
-                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 5]);
+                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 25]);
             }
            let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
            
