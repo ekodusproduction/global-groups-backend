@@ -1,5 +1,5 @@
 const GalleryService = require("../services/GalleryService")
-const StatusCode = require("../utils/common/constant")
+const StatusCode = require("../utils/common/Constant")
 const {fileSchema, galleryUploadValidation, galleryItemDeleteValidation, galleryItemUpdateValidation, galleryItemFetchValidation} = require("../utils/common/validations/galleryValidation")
 const EventEmitter = require("../utils/common/EventEmitter")
 const fs = require('fs')

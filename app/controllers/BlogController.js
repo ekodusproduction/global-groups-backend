@@ -1,5 +1,5 @@
 const EventEmitter = require("../utils/common/EventEmitter");
-const StatusCode = require("../utils/common/constant");
+const StatusCode = require("../utils/common/Constant");
 const {blogPostValidation, deleteBlogValidation, updateBlogValidation} = require("../utils/common/validations/blogPostValidation")
 const BlogService = require('../services/BlogService')
 const {validateAndProcessFile} = require("../utils/common/CommonFunction")

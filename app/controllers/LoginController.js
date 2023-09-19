@@ -1,5 +1,5 @@
 const LoginService = require("../services/LoginService");
-const StatusCode = require("../utils/common/constant");
+const StatusCode = require("../utils/common/Constant");
 const EventEmitter = require("../utils/common/EventEmitter");
 const { loginValidation} = require("../utils/common/validations/signupValidation")
 /**

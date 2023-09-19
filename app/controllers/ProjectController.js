@@ -1,5 +1,5 @@
 const ProjectService = require("../services/ProjectService")
-const StatusCode = require("../utils/common/constant")
+const StatusCode = require("../utils/common/Constant")
 const {createProjectValidation, updateProjectValidation, getProjectDetialsValidation, deleteProjectValidation, projectHighlightsValidataion} = require("../utils/common/validations/propertyValidation")
 const EventEmitter = require("../utils/common/EventEmitter")
 const {validateAndProcessFile} = require("../utils/common/CommonFunction")

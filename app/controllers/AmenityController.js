@@ -1,5 +1,5 @@
 const AmenityService = require("../services/AmenityService")
-const StatusCode = require("../utils/common/constant")
+const StatusCode = require("../utils/common/Constant")
 const {amenityValidation, addAmenityValidation, getAmenityValidation} = require("../utils/common/validations/amenityValidation")
 const EventEmitter = require("../utils/common/EventEmitter")
 const {validateAndProcessFile} = require("../utils/common/CommonFunction")

@@ -1,5 +1,5 @@
 const TestimonyService = require("../services/TestimonialService")
-const StatusCode = require("../utils/common/constant")
+const StatusCode = require("../utils/common/Constant")
 const {testimonialValidation, deleteTestimonyValidation} = require("../utils/common/validations/testimonialValidation")
 const EventEmitter = require("../utils/common/EventEmitter")
 const fs = require('fs')

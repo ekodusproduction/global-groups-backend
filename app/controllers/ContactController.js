@@ -1,5 +1,5 @@
 const EventEmitter = require("../utils/common/EventEmitter");
-const StatusCode = require("../utils/common/constant");
+const StatusCode = require("../utils/common/Constant");
 const {contactValidation}  = require("../utils/common/validations/contactvalidation")
 const ContactService = require("../services/ContactService")
 const Conatact = (request, response) =>{
