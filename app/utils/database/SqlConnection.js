@@ -1,6 +1,8 @@
 'use strict'
 const env = process.env.NODE_ENV || 'development'
-const config = require(__dirname + '/../common/config.json')[env]
+console.log("env", env)
+const config = require(__dirname + '/../common/config.json')['production']
+console.log("config", config)
 const mysql = require('mysql2')
 
 const dbConn = mysql.createPool({
