@@ -9,16 +9,16 @@ const auditEmitter = (eventName, message) => {
     EventEmitter.once(eventName, function (message) {
       message.push(new Date())
       message.push(new Date())
-      const subSqlQuery = 'CALL procAddAuditLog(?,?,?,?,?,?)'
-      dbConn.getConnection((err, conn) => {
-        if (err) {
-          console.log('Database Connection Failed !!!', err)
-        } else {
-          conn.query(subSqlQuery, message, () => {
-            closeConnection(conn)
-          })
-        }
-      })
+      // const subSqlQuery = 'CALL procAddAuditLog(?,?,?,?,?,?)'
+      // dbConn.getConnection((err, conn) => {
+      //   if (err) {
+      //     console.log('Database Connection Failed !!!', err)
+      //   } else {
+      //     conn.query(subSqlQuery, message, () => {
+      //       closeConnection(conn)
+      //     })
+      //   }
+      // })
     })
     EventEmitter.emit(eventName, message)
   }).catch((error) => {
