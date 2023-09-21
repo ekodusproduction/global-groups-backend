@@ -33,16 +33,16 @@ const errorEmitter = (eventName, message) => {
       message.push(new Date())
       message.push(new Date())
       Log.error(message);
-      const subSqlQuery = 'CALL procAddErrorLog(?,?,?,?,?,?)'
-      dbConn.getConnection((err, conn) => {
-        if (err) {
-          console.log('Database Connection Failed !!!', err)
-        } else {
-          conn.query(subSqlQuery, message, () => {
-            closeConnection(conn)
-          })
-        }
-      })
+      // const subSqlQuery = 'CALL procAddErrorLog(?,?,?,?,?,?)'
+      // dbConn.getConnection((err, conn) => {
+      //   if (err) {
+      //     console.log('Database Connection Failed !!!', err)
+      //   } else {
+      //     conn.query(subSqlQuery, message, () => {
+      //       closeConnection(conn)
+      //     })
+      //   }
+      // })
     })
     EventEmitter.emit(eventName, message)
   }).catch((error) => {
