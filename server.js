@@ -33,7 +33,7 @@ const loginRoute = require("./app/routes/LoginRoute")
 const testimonyRoute = require("./app/routes/TestimonialRoute")
 const amenityRoute = require("./app/routes/AmenityRoute")
 
-app.use("/node/v1/api", propertyRoute);
+app.use("/v1/api", propertyRoute);
 app.use("/v1/api", registratioRoute)
 app.use("/v1/api", galleryRoute)
 app.use("/v1/api", contactRoute)
