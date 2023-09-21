@@ -33,18 +33,18 @@ const loginRoute = require("./app/routes/LoginRoute")
 const testimonyRoute = require("./app/routes/TestimonialRoute")
 const amenityRoute = require("./app/routes/AmenityRoute")
 
-// app.use("/node/v1/api", propertyRoute);
-// app.use("/v1/api", registratioRoute)
-// app.use("/v1/api", galleryRoute)
-// app.use("/v1/api", contactRoute)
-// app.use("/v1/api", blogRoute)
-// app.use("/v1/api", loginRoute)
-// app.use("/v1/api", testimonyRoute)
-// app.use("/v1/api", amenityRoute)
+app.use("/node/v1/api", propertyRoute);
+app.use("/v1/api", registratioRoute)
+app.use("/v1/api", galleryRoute)
+app.use("/v1/api", contactRoute)
+app.use("/v1/api", blogRoute)
+app.use("/v1/api", loginRoute)
+app.use("/v1/api", testimonyRoute)
+app.use("/v1/api", amenityRoute)
 
-app.get("/test", function (req, res) {
-  res.json({message: "Hello world!"});
-});
+// app.get("/test", function (req, res) {
+//   res.json({message: "Hello world!"});
+// });
 require("./app/utils/middlewares/SwaggerDoc")(app);
 require("./app/utils/middlewares/NotFound")(app);
 
