@@ -6,7 +6,7 @@ const Router = Express.Router();
 const multer = require("multer");
 const path = require('path');
 const EventEmitter = require("../utils/common/EventEmitter");
-const StatusCode = require("../utils/common/constant");
+const StatusCode = require("../utils/common/Constant");
 
 
 /**

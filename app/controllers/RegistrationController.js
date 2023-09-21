@@ -1,7 +1,7 @@
 const EventEmitter = require("../utils/common/EventEmitter")
-const StatusCode = require("../utils/common/constant")
+const StatusCode = require("../utils/common/Constant")
 const RegistrationService = require("../services/RegistrationService")
-const constant = require("../utils/common/constant")
+const constant = require("../utils/common/Constant")
 const {RegistrationValidation} = require("../utils/common/validations/signupValidation")
 
 const Registration = (request, response) =>{

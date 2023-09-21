@@ -1,5 +1,5 @@
 const Log = require('../logger/logger').log
-const StatusCode = require('../common/constant')
+const StatusCode = require('../common/Constant')
 
 module.exports = (request, response, next) => {
   try {
