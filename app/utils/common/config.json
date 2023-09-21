@@ -15,7 +15,7 @@
     "database": "global_groups",
     "host": "165.22.210.84",
     "dialect": "mysql", 
-    "port": 3307,
+    "port": 3306,
     "operatorsAliases": false
   },
  
