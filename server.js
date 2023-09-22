@@ -42,9 +42,9 @@ app.use("/v1/api", loginRoute)
 app.use("/v1/api", testimonyRoute)
 app.use("/v1/api", amenityRoute)
 
-// app.get("/test", function (req, res) {
-//   res.json({message: "Hello world!"});
-// });
+app.get("/test", function (req, res) {
+  res.json({message: "Hello world!"});
+});
 require("./app/utils/middlewares/SwaggerDoc")(app);
 require("./app/utils/middlewares/NotFound")(app);
 
