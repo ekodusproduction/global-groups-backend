@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs')
 const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink)
+const writeFileAsync = promisify(fs.writeFile);
 const getAllProjectList = async (request) => {
   let pageNumber =  request.query.pageNumber ? parseInt(request.query.pageNumber) : 1;;
   let pageSize = request.query.pageSize ? parseInt(request.query?.pageSize): 10;
@@ -159,7 +160,8 @@ const createProject = async(request) => {
          const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
          console.log("projectImagapath", projectImagefilePath)
             const buffer = Buffer.from(file.buffer, "utf-8");
-            await fs.writeFile(projectImagefilePath, buffer);
+
+          writeFileAsync(projectImagefilePath, buffer);
           
 
 
@@ -180,7 +182,7 @@ const createProject = async(request) => {
                const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
                console.log("architectureImagepath", architetureImagePath)
                const buffer = Buffer.from(file.buffer, "utf-8");
-               await fs.writeFile(architetureImagePath, buffer);
+               writeFileAsync(architetureImagePath, buffer);
          }
         //  if(fieldname?.fieldname === "projectPdf"){
         //     projectPdfImageError = validateAndProcessFile(fieldname, [".pdf", 25]);
