@@ -1,18 +1,18 @@
 const http = require("http");
 const dotEnv = require("dotenv");
 const Express = require("express");
-const fileUpload = require('express-fileupload');
-//const multer = require('multer');
+//const fileUpload = require('express-fileupload');
+const multer = require('multer');
 var cors = require("cors");
 const {join} = require('path');
 dotEnv.config();
 
 //const BodyParser = require("body-parser");
 const app = Express();
-app.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: 'public/'
-}));
+// app.use(fileUpload({
+//   useTempFiles: true,
+//   tempFileDir: 'public/'
+// }));
 
 app.use(Express.json({ limit: "50mb" }));
 app.use(Express.urlencoded({ limit: "50mb", extended: true }));
@@ -23,7 +23,7 @@ app.use('/uploads',Express.static(join(__dirname, 'pdf')))
 
 
 
-//app.use(multer().any())
+app.use(multer().any())
 
 const Port = process.env.PORT || 3000;
 const Server = http.createServer(app);
