@@ -61,10 +61,10 @@ const validateAndProcessFile = (file, allowedFileTypes = ['.jpg', '.jpeg', '.png
   console.log("file", file)
   let errors = []
   const maxFileSize = size * 1024 * 1024; // 10 MB
-  const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
+ // const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
   console.log("fileExtension", path.extname(file.originalname))
-  if (!allowedFileTypes.includes(fileExtension)) {
-    errors.push(`Invalid file type: ${fileExtension} for ${file?.fieldname} Required type is ${JSON.stringify(allowedFileTypes)}`)
+  if (!allowedFileTypes.includes(path.extname(file.originalname))) {
+    errors.push(`Invalid file type: ${path.extname(file.originalname)} for ${file?.fieldname} Required type is ${JSON.stringify(allowedFileTypes)}`)
     return errors
     
   }
