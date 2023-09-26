@@ -6,7 +6,7 @@ const {validateAndProcessFile} = require("../utils/common/CommonFunction")
 const fs = require('fs')
 const path = require('path')
 const createProject = async(request, response) =>{
-    console.log("request", request.body, request.files)
+    console.log("request", request?.files)
     const {error} = createProjectValidation(request.body)
     let apiName = "createProject";
     if (error) {
@@ -46,9 +46,103 @@ const createProject = async(request, response) =>{
             },
         });
     }
-    console.log("files", request.files)
-    
+   else if(!request.files?.projectImage){
+    EventEmitter.errorEmitter("createProject", [
+        apiName,
+        StatusCode.apiVersion.VERSION1 + request.route.path,
+        StatusCode.errorMessage.PROJECT_IMAGE_FILE_REQUIRED,
+        StatusCode.statusCode.BAD_REQUEST,
+    ]);
+    return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+        status: StatusCode.statusCode.BAD_REQUEST,
+        data: {
+            message: StatusCode.errorMessage.PROJECT_IMAGE_FILE_REQUIRED,
+           
+        },
+    });
+   }else{
+  
+            let projecImageError = []
+            let projectPdfImageError = []
+             let architectureMapImageError = [];
+        
+            if(request.files?.projectImage){
+                projecImageError = validateAndProcessFile(request.files?.projectImage);
+            }
+            if(request.files?.architectureMap){
+                architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
+            }
+            if(request.files?.projectPdf){
+                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 25]);
+            }
+           let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
    
+           
+   if(errors?.length > 0){
+       EventEmitter.errorEmitter("createProject", [
+           apiName,
+           StatusCode.apiVersion.VERSION1 + request.route.path,
+           errors,
+           StatusCode.statusCode.BAD_REQUEST,
+       ]);
+       return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+           status: StatusCode.statusCode.BAD_REQUEST,
+           data: {
+               message: errors,
+              
+           },
+       });
+   }else{
+    console.log("Dinesh")
+    return new Promise(function () {
+        ProjectService.createProjectServices(request).then((result) => {
+            console.log("result", result)
+            if(result){
+              EventEmitter.auditEmitter("createProject", [
+                  apiName,
+                  StatusCode.apiVersion.VERSION1 + request.route.path,
+                  "list",
+                  StatusCode.statusCode.SUCCESS,
+              ]);
+              return response.status(StatusCode.statusCode.SUCCESS).send({
+                  status: StatusCode.statusCode.SUCCESS,
+                  data: {
+                      message: StatusCode.successMessage.SUCCESSFULL,
+                      result: result,
+                  },
+              });
+            }else if(!result){
+              EventEmitter.auditEmitter("createProject", [
+                  apiName,
+                  StatusCode.apiVersion.VERSION1 + request.route.path,
+                 "INTERNAL SERVER ERROR",
+                  StatusCode.statusCode.INTERNAL_SERVER_ERROR,
+              ]);
+              return response.status(StatusCode.statusCode.SUCCESS).send({
+                  status: StatusCode.statusCode.INTERNAL_SERVER_ERROR,
+                  data: {
+                      message: StatusCode.successMessage.INTERNAL_SERVER_ERROR,
+                     
+                  },
+              });
+            }
+           
+        });
+    }).catch((err) => {
+        EventEmitter.errorEmitter("createProject", [
+            apiName,
+            StatusCode.apiVersion.VERSION1 + request.route.path,
+            err.message,
+            StatusCode.statusCode.BAD_REQUEST,
+        ]);
+        return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+            status: StatusCode.statusCode.BAD_REQUEST,
+            data: { message: err.message },
+        });
+    });
+   }
+ 
+   }
      
       
     }
