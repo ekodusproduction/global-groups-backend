@@ -299,7 +299,7 @@ const updateProject = async (request) => {
                     if(result[0][0]?.projectPdf !== null){
                       await unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
                     }
-                    let  brochureFileWithoutExtention = path.parse(file?.name).name
+                    let  brochureFileWithoutExtention = path.parse(file?.originalname).name
                           console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
                           const brochureExtension = path.extname(file.originalname);
                           console.log("fileExtension", brochureExtension)
