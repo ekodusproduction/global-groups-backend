@@ -158,7 +158,7 @@ const createProject = async(request) => {
           const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
          const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
             const buffer = Buffer.from(file.buffer, "utf-8");
-            await fs.writeFile(projectImagefilePath, buffer, "utf-8");
+            await fs.writeFile(projectImagefilePath, buffer);
           
 
 
@@ -178,7 +178,7 @@ const createProject = async(request) => {
                  architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
                const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
                const buffer = Buffer.from(file.buffer, "utf-8");
-               await fs.writeFile(architetureImagePath, buffer, "utf-8");
+               await fs.writeFile(architetureImagePath, buffer);
          }
         //  if(fieldname?.fieldname === "projectPdf"){
         //     projectPdfImageError = validateAndProcessFile(fieldname, [".pdf", 25]);
