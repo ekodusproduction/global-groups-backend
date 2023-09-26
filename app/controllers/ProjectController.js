@@ -6,6 +6,7 @@ const {validateAndProcessFile} = require("../utils/common/CommonFunction")
 const fs = require('fs')
 const path = require('path')
 const createProject = async(request, response) =>{
+    console.log("request", request.body, request.files)
     const {error} = createProjectValidation(request.body)
     let apiName = "createProject";
     if (error) {
