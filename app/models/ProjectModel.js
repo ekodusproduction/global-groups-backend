@@ -149,7 +149,7 @@ const createProject = async(request) => {
 //         const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
 //        const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
 
-       request?.files.forEach(async file => {
+       request?.files.forEach( file => {
         if(file?.fieldname === "projectImage"){
           let  projectImageFileWithoutExtention = path.parse(file?.originalname).name
           console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
