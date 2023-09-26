@@ -46,7 +46,9 @@ const createProject = async(request, response) =>{
             },
         });
     }
-   else if(!request.files[0]?.projectImage){
+   else if(!request.files.some(item => 
+    item.fieldname === "projectImage" 
+  )){
     EventEmitter.errorEmitter("createProject", [
         apiName,
         StatusCode.apiVersion.VERSION1 + request.route.path,
@@ -72,7 +74,7 @@ const createProject = async(request, response) =>{
                  if(fieldname?.fieldname === "architectureMap"){
                     projecImageError = validateAndProcessFile(fieldname);
                  }
-                 if(fieldname?.fieldname === "architectureMap"){
+                 if(fieldname?.fieldname === "projectPdf"){
                     projectPdfImageError = validateAndProcessFile(fieldname, [".pdf", 25]);
                  }
 
