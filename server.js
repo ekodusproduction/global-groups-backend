@@ -50,12 +50,12 @@ app.get("/test", function (req, res) {
   res.json({message: "Hello world!"});
 });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded.' });
-  }
-  // Handle the uploaded file or any other potential errors.
-});
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: 'No file uploaded.' });
+//   }
+//   // Handle the uploaded file or any other potential errors.
+// });
 require("./app/utils/middlewares/SwaggerDoc")(app);
 require("./app/utils/middlewares/NotFound")(app);
 
