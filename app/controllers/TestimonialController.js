@@ -42,7 +42,7 @@ const addTestimony = (request, response) =>{
                 EventEmitter.errorEmitter("addTestimony", [
                     apiName,
                     StatusCode.apiVersion.VERSION1 + request.route.path,
-                    projecImageError,
+                    imageError,
                     StatusCode.statusCode.BAD_REQUEST,
                 ]);
                 return response.status(StatusCode.statusCode.BAD_REQUEST).send({
