@@ -175,7 +175,7 @@ const createProject = async(request) => {
                writeFileAsync(architetureImagePath, buffer);
          }
          if(file?.fieldname === "projectPdf"){
-          let  brochureFileWithoutExtention = path.parse(file?.name).name
+          let  brochureFileWithoutExtention = path.parse(file?.originalname).name
                 console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
                 const brochureExtension = path.extname(file.originalname);
                 console.log("fileExtension", brochureExtension)
