@@ -16,13 +16,13 @@ app.use(cors());
 app.use(Express.static(join(__dirname, 'public')))
 app.use('/uploads',Express.static(join(__dirname, 'images')))
 app.use('/uploads',Express.static(join(__dirname, 'pdf')))
-// app.use(fileUpload({
-//   useTempFiles: true,
-//   tempFileDir: 'public/'
-// }));
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: 'public/'
+}));
 
 
-// app.use(multer({}).any())
+app.use(multer({}).any())
 
 const Port = process.env.PORT || 3000;
 const Server = http.createServer(app);
