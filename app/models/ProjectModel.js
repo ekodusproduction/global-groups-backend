@@ -157,6 +157,7 @@ const createProject = async(request) => {
            const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
           const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
          const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
+         console.log("projectImagapath", projectImagefilePath)
             const buffer = Buffer.from(file.buffer, "utf-8");
             await fs.writeFile(projectImagefilePath, buffer);
           
@@ -177,6 +178,7 @@ const createProject = async(request) => {
                  const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
                  architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
                const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
+               console.log("architectureImagepath", architetureImagePath)
                const buffer = Buffer.from(file.buffer, "utf-8");
                await fs.writeFile(architetureImagePath, buffer);
          }
