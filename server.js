@@ -1,6 +1,6 @@
 const http = require("http");
 const dotEnv = require("dotenv");
-//const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload');
 const multer = require('multer');
 var cors = require("cors");
 const {join} = require('path');
@@ -16,10 +16,10 @@ app.use(cors());
 app.use(Express.static(join(__dirname, 'public')))
 app.use('/uploads',Express.static(join(__dirname, 'images')))
 app.use('/uploads',Express.static(join(__dirname, 'pdf')))
-// app.use(fileUpload({
-//   useTempFiles: true,
-//   tempFileDir: 'public/'
-// }));
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: 'public/'
+}));
 
 
 app.use(multer().any())
