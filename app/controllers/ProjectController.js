@@ -65,16 +65,28 @@ const createProject = async(request, response) =>{
             let projecImageError = []
             let projectPdfImageError = []
              let architectureMapImageError = [];
+             request?.files.forEach(fieldname => {
+                if(fieldname?.fieldname === "projectImage"){
+                    projecImageError = validateAndProcessFile(fieldname);
+                }
+                 if(fieldname?.fieldname === "architectureMap"){
+                    projecImageError = validateAndProcessFile(fieldname);
+                 }
+                 if(fieldname?.fieldname === "architectureMap"){
+                    projectPdfImageError = validateAndProcessFile(fieldname, [".pdf", 25]);
+                 }
+
+             });
         
-            if(request.files?.projectImage){
-                projecImageError = validateAndProcessFile(request.files[0]?.projectImage);
-            }
-            if(request.files?.architectureMap){
-                architectureMapImageError = validateAndProcessFile(request.files[0]?.architectureMap);
-            }
-            if(request.files?.projectPdf){
-                projectPdfImageError = validateAndProcessFile(request.files[0]?.projectPdf, [".pdf", 25]);
-            }
+            // if(fieldname.includes(request.files[0].fieldname)){
+            //     projecImageError = validateAndProcessFile(request.files[0]?.projectImage);
+            // }
+            // if(request.files?.architectureMap){
+            //     architectureMapImageError = validateAndProcessFile(request.files[0]?.architectureMap);
+            // }
+            // if(request.files?.projectPdf){
+            //     projectPdfImageError = validateAndProcessFile(request.files[0]?.projectPdf, [".pdf", 25]);
+            // }
            let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
    
            
