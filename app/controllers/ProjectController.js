@@ -46,7 +46,7 @@ const createProject = async(request, response) =>{
             },
         });
     }
-   else if(!request.files?.projectImage){
+   else if(!request.files[0]?.projectImage){
     EventEmitter.errorEmitter("createProject", [
         apiName,
         StatusCode.apiVersion.VERSION1 + request.route.path,
@@ -67,13 +67,13 @@ const createProject = async(request, response) =>{
              let architectureMapImageError = [];
         
             if(request.files?.projectImage){
-                projecImageError = validateAndProcessFile(request.files?.projectImage);
+                projecImageError = validateAndProcessFile(request.files[0]?.projectImage);
             }
             if(request.files?.architectureMap){
-                architectureMapImageError = validateAndProcessFile(request.files?.architectureMap);
+                architectureMapImageError = validateAndProcessFile(request.files[0]?.architectureMap);
             }
             if(request.files?.projectPdf){
-                projectPdfImageError = validateAndProcessFile(request.files?.projectPdf, [".pdf", 25]);
+                projectPdfImageError = validateAndProcessFile(request.files[0]?.projectPdf, [".pdf", 25]);
             }
            let errors = projecImageError.concat(architectureMapImageError, projectPdfImageError)
    
