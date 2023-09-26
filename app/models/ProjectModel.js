@@ -222,8 +222,6 @@ const createProject = async(request) => {
                       let result = false;
                       reject(result);
                     } else {
-                      projectImageFile.mv(projectImagefilePath)
-                     
                       let result = true;
                       resolve(result);
                     }
@@ -268,7 +266,7 @@ const updateProject = async (request) => {
 
                 request?.files.forEach(async file => {
                   if(file?.fieldname === "projectImage"){
-                    await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].projectimage))
+                     unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].projectimage))
                     let  projectImageFileWithoutExtention = path.parse(file?.originalname).name
                     console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
                     const projectImageExtension = path.extname(file.originalname);
@@ -282,7 +280,7 @@ const updateProject = async (request) => {
                   }
                    if(file?.fieldname === "architectureMap"){
                     if(result[0][0]?.architectureMap !== null){
-                      await unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].architectureMap))
+                       unlinkAsync(path.join(__dirname, '../../images/'+result[0][0].architectureMap))
                     }
                     let  architectureImageFileWithoutExtention = path.parse(file?.originalname).name
                           console.log("architectureImageFileWithoutExtention", architectureImageFileWithoutExtention)
@@ -297,7 +295,7 @@ const updateProject = async (request) => {
                    }
                    if(file?.fieldname === "projectPdf"){
                     if(result[0][0]?.projectPdf !== null){
-                      await unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
+                       unlinkAsync(path.join(__dirname, '../../pdf/'+result[0][0].projectPdf))
                     }
                     let  brochureFileWithoutExtention = path.parse(file?.originalname).name
                           console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
