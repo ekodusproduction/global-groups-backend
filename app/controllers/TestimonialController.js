@@ -37,7 +37,7 @@ const addTestimony = (request, response) =>{
         if(!request.files || Object.keys(request.files).length === 0){
             commonAddTestimonial(request, response, apiName)
         }else{
-            let imageError = validateAndProcessFile(request.files?.image);
+            let imageError = validateAndProcessFile(request.files);
             if(imageError?.length > 0){
                 EventEmitter.errorEmitter("addTestimony", [
                     apiName,
