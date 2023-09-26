@@ -31,22 +31,22 @@ const createProject = async(request, response) =>{
         }
     }
    else{
-    if(!request.files || Object.keys(request.files).length === 0){
-        EventEmitter.errorEmitter("createProject", [
-            apiName,
-            StatusCode.apiVersion.VERSION1 + request.route.path,
-            StatusCode.errorMessage.IMAGE_FILE_REQUIRED,
-            StatusCode.statusCode.BAD_REQUEST,
-        ]);
-        return response.status(StatusCode.statusCode.BAD_REQUEST).send({
-            status: StatusCode.statusCode.BAD_REQUEST,
-            data: {
-                message: StatusCode.errorMessage.IMAGE_FILE_REQUIRED,
+    // if(!request.files || Object.keys(request.files).length === 0){
+    //     EventEmitter.errorEmitter("createProject", [
+    //         apiName,
+    //         StatusCode.apiVersion.VERSION1 + request.route.path,
+    //         StatusCode.errorMessage.IMAGE_FILE_REQUIRED,
+    //         StatusCode.statusCode.BAD_REQUEST,
+    //     ]);
+    //     return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+    //         status: StatusCode.statusCode.BAD_REQUEST,
+    //         data: {
+    //             message: StatusCode.errorMessage.IMAGE_FILE_REQUIRED,
                
-            },
-        });
-    }
-   else if(!request.files?.projectImage){
+    //         },
+    //     });
+    // }
+    if(!request.files?.projectImage){
     EventEmitter.errorEmitter("createProject", [
         apiName,
         StatusCode.apiVersion.VERSION1 + request.route.path,
