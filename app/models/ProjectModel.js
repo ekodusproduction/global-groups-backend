@@ -138,19 +138,19 @@ const createProject = async(request) => {
  console.log("id", Id)
  let projectPdf = null
  let architectureImage = null
- const projectImageFile = request?.files?.projectImage
+//  const projectImageFile = request?.files?.projectImage
 
-        let  projectImageFileWithoutExtention = path.parse(projectImageFile?.name).name
-        console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
-        const projectImageExtension = path.extname(projectImageFile.name);
-        console.log("fileExtension", projectImageExtension)
-         const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
-        const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
-       const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
+//         let  projectImageFileWithoutExtention = path.parse(projectImageFile?.name).name
+//         console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
+//         const projectImageExtension = path.extname(projectImageFile.name);
+//         console.log("fileExtension", projectImageExtension)
+//          const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
+//         const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+//        const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
 
        request?.files.forEach(fieldname => {
         if(fieldname?.fieldname === "projectImage"){
-            
+          const projectImageFile = request?.files?.projectImage
         let  projectImageFileWithoutExtention = path.parse(fieldname?.originalname).name
         console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
         const projectImageExtension = path.extname(fieldname.originalname);
@@ -158,6 +158,7 @@ const createProject = async(request) => {
          const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
         const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
        const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
+       projectImageFile.mv(projectImagefilePath)
         }
          if(fieldname?.fieldname === "architectureMap"){
           const architectureImageFile = request?.files?.architectureMap
