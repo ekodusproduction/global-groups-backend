@@ -150,44 +150,52 @@ const createProject = async(request) => {
 //         const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
 //        const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
 
-       request?.files.forEach( file => {
-        if(file?.fieldname === "projectImage"){
-          let  projectImageFileWithoutExtention = path.parse(file?.originalname).name
-          console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
-          const projectImageExtension = path.extname(file.originalname);
-          console.log("fileExtension", projectImageExtension)
-           const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
-           projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
-         const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
-         console.log("projectImagapath", projectImagefilePath)
-            const buffer = Buffer.from(file.buffer, "utf-8");
-          writeFileAsync(projectImagefilePath, buffer);
-        }
-         if(file?.fieldname === "architectureMap"){
-          let  architectureImageFileWithoutExtention = path.parse(file?.originalname).name
-                console.log("architectureImageFileWithoutExtention", architectureImageFileWithoutExtention)
-                const architectureImageExtension = path.extname(file.originalname);
-                console.log("fileExtension", architectureImageExtension)
-                 const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
-                 architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
-               const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
-               console.log("architectureImagepath", architetureImagePath)
-               const buffer = Buffer.from(file.buffer, "utf-8");
-               writeFileAsync(architetureImagePath, buffer);
-         }
-         if(file?.fieldname === "projectPdf"){
-          let  brochureFileWithoutExtention = path.parse(file?.originalname).name
-                console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
-                const brochureExtension = path.extname(file.originalname);
-                console.log("fileExtension", brochureExtension)
-                 const brochurePdfCleanName = brochureFileWithoutExtention.replace(/\s/g, "_");
-              projectPdf =  brochurePdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +brochureExtension;
-             const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
-             const buffer = Buffer.from(file.buffer, "utf-8");
-             writeFileAsync(pdfPath, buffer);
-         }
 
-     });
+
+
+
+if(request.body.fieldname === "projectImage"){
+  console.log("has",request.body.fieldname )
+}
+return
+    //    request?.files.forEach( file => {
+    //     if(file?.fieldname === "projectImage"){
+    //       let  projectImageFileWithoutExtention = path.parse(file?.originalname).name
+    //       console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
+    //       const projectImageExtension = path.extname(file.originalname);
+    //       console.log("fileExtension", projectImageExtension)
+    //        const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
+    //        projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+    //      const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
+    //      console.log("projectImagapath", projectImagefilePath)
+    //         const buffer = Buffer.from(file.buffer, "utf-8");
+    //       writeFileAsync(projectImagefilePath, buffer);
+    //     }
+    //      if(file?.fieldname === "architectureMap"){
+    //       let  architectureImageFileWithoutExtention = path.parse(file?.originalname).name
+    //             console.log("architectureImageFileWithoutExtention", architectureImageFileWithoutExtention)
+    //             const architectureImageExtension = path.extname(file.originalname);
+    //             console.log("fileExtension", architectureImageExtension)
+    //              const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
+    //              architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
+    //            const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
+    //            console.log("architectureImagepath", architetureImagePath)
+    //            const buffer = Buffer.from(file.buffer, "utf-8");
+    //            writeFileAsync(architetureImagePath, buffer);
+    //      }
+    //      if(file?.fieldname === "projectPdf"){
+    //       let  brochureFileWithoutExtention = path.parse(file?.originalname).name
+    //             console.log("brochureFileWithoutExtention", brochureFileWithoutExtention)
+    //             const brochureExtension = path.extname(file.originalname);
+    //             console.log("fileExtension", brochureExtension)
+    //              const brochurePdfCleanName = brochureFileWithoutExtention.replace(/\s/g, "_");
+    //           projectPdf =  brochurePdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +brochureExtension;
+    //          const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
+    //          const buffer = Buffer.from(file.buffer, "utf-8");
+    //          writeFileAsync(pdfPath, buffer);
+    //      }
+
+    //  });
 
 
   return new Promise(function (resolve, reject) {
