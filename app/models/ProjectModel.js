@@ -158,7 +158,7 @@ const createProject = async(request) => {
         console.log("fileExtension", architectureImageExtension)
          const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
          architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
-       const architetureImagePath =  path.join(__dirname, '../../../images/'+architectureImage)
+       const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
        architectureImageFile.mv(architetureImagePath)
 }
 
