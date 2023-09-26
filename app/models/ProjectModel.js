@@ -274,7 +274,7 @@ const updateProject = async (request) => {
                     const projectImageExtension = path.extname(file.originalname);
                     console.log("fileExtension", projectImageExtension)
                      const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
-                    const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+                     projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
                    const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
                    console.log("projectImagapath", projectImagefilePath)
                       const buffer = Buffer.from(file.buffer, "utf-8");
@@ -289,8 +289,8 @@ const updateProject = async (request) => {
                           const architectureImageExtension = path.extname(file.originalname);
                           console.log("fileExtension", architectureImageExtension)
                            const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
-                           architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
-                         const architetureImagePath =  path.join(__dirname, '../../images/'+architectureImage)
+                           architectureMap =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
+                         const architetureImagePath =  path.join(__dirname, '../../images/'+architectureMap)
                          console.log("architectureImagepath", architetureImagePath)
                          const buffer = Buffer.from(file.buffer, "utf-8");
                          writeFileAsync(architetureImagePath, buffer);
@@ -306,7 +306,6 @@ const updateProject = async (request) => {
                            const brochurePdfCleanName = brochureFileWithoutExtention.replace(/\s/g, "_");
                         projectPdf =  brochurePdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +brochureExtension;
                        const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
-                       brochurePdfFile.mv(pdfPath)
                        const buffer = Buffer.from(file.buffer, "utf-8");
                        writeFileAsync(pdfPath, buffer);
                    }
