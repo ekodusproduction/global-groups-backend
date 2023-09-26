@@ -55,6 +55,7 @@ const fileUploads = require("../utils/middlewares/uploadMiddleware")
 
 
 Router.post("/testimony/addTestimony", (response, request) => {
+    console.log("testimony controller hitted")
     TestimonialController.addTestimony(response, request);
 });
 
