@@ -83,9 +83,9 @@ const uploadGallery = async(request, response) =>{
         }
     }
    else{
-    console.log("files", request.files)
+    //console.log("files", request.files)
    
-    console.log("fileLength",  Object.keys(request.files).length)
+    // console.log("fileLength",  Object.keys(request.files).length)
     if(!request.files || Object.keys(request.files).length === 0){
         EventEmitter.errorEmitter("uploadGallery", [
             apiName,
