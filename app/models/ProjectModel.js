@@ -139,6 +139,7 @@ const createProject = async(request) => {
  console.log("id", Id)
  let projectPdf = null
  let architectureImage = null
+ let projectImage = null
 //  const projectImageFile = request?.files?.projectImage
 
 //         let  projectImageFileWithoutExtention = path.parse(projectImageFile?.name).name
@@ -156,7 +157,7 @@ const createProject = async(request) => {
           const projectImageExtension = path.extname(file.originalname);
           console.log("fileExtension", projectImageExtension)
            const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
-          const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
+           projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
          const projectImagefilePath =  path.join(__dirname, '../../images/'+projectImage)
          console.log("projectImagapath", projectImagefilePath)
             const buffer = Buffer.from(file.buffer, "utf-8");
