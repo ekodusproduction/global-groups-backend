@@ -9,7 +9,10 @@ dotEnv.config();
 
 //const BodyParser = require("body-parser");
 const app = Express();
-app.use(fileUpload());
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: 'public/'
+}));
 
 app.use(Express.json({ limit: "50mb" }));
 app.use(Express.urlencoded({ limit: "50mb", extended: true }));
