@@ -46,6 +46,7 @@ const createProject = async(request, response) =>{
             },
         });
     }
+    
    else if(!request.files.some(item => 
     item.fieldname === "projectImage" 
   )){
