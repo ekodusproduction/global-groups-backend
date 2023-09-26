@@ -57,6 +57,7 @@ const imageFilter = function(req, file, cb) {
 
 
 const validateAndProcessFile = (file, allowedFileTypes = ['.jpg', '.jpeg', '.png', '.gif', '.svg'], size = 25) => {
+  console.log("file", file)
   let errors = []
   const maxFileSize = size * 1024 * 1024; // 10 MB
   const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
