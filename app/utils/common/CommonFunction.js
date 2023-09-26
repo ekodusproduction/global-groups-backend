@@ -1,4 +1,5 @@
 const dotEnv = require('dotenv')
+const path = require('path')
 dotEnv.config()
 
 
@@ -61,7 +62,7 @@ const validateAndProcessFile = (file, allowedFileTypes = ['.jpg', '.jpeg', '.png
   let errors = []
   const maxFileSize = size * 1024 * 1024; // 10 MB
   const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
-  console.log("fileExtension", fileExtension)
+  console.log("fileExtension", path.extname(file.fieldname))
   if (!allowedFileTypes.includes(fileExtension)) {
     errors.push(`Invalid file type: ${fileExtension} for ${file?.fieldname} Required type is ${JSON.stringify(allowedFileTypes)}`)
     return errors
