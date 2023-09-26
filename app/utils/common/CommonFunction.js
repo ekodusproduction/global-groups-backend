@@ -1,5 +1,4 @@
 const dotEnv = require('dotenv')
-const path = require('path')
 dotEnv.config()
 
 
@@ -58,18 +57,16 @@ const imageFilter = function(req, file, cb) {
 
 
 const validateAndProcessFile = (file, allowedFileTypes = ['.jpg', '.jpeg', '.png', '.gif', '.svg'], size = 25) => {
-  console.log("file", file)
   let errors = []
   const maxFileSize = size * 1024 * 1024; // 10 MB
- // const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
-  console.log("fileExtension", path.extname(file.originalname))
-  if (!allowedFileTypes.includes(path.extname(file.originalname))) {
-    errors.push(`Invalid file type: ${path.extname(file.originalname)} for ${file?.fieldname} Required type is ${JSON.stringify(allowedFileTypes)}`)
+  const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+  if (!allowedFileTypes.includes(fileExtension)) {
+    errors.push(`Invalid file type: ${fileExtension} for ${file?.name} Required type is ${JSON.stringify(allowedFileTypes)}`)
     return errors
     
   }
   if (file.size > maxFileSize) {
-     errors.push(`File size ${Math.floor(file?.size/(1024*1024))} MB exceeds the limit: ${Math.floor(maxFileSize/(1024 * 1024))} MB for file ${file?.fieldname}`)
+     errors.push(`File size ${Math.floor(file?.size/(1024*1024))} MB exceeds the limit: ${Math.floor(maxFileSize/(1024 * 1024))} MB for file ${file?.name}`)
      return errors
   
   }
