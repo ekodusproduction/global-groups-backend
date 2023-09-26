@@ -10,6 +10,7 @@ const {validateAndProcessFile} = require("../utils/common/CommonFunction")
 
 
 const addTestimony = (request, response) =>{
+    console.log("request", request.body)
     let apiName = "postBlog";
     const {error} = testimonialValidation(request.body)
     if (error) {
