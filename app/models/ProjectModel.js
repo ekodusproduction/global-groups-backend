@@ -182,7 +182,6 @@ const createProject = async(request) => {
                  const brochurePdfCleanName = brochureFileWithoutExtention.replace(/\s/g, "_");
               projectPdf =  brochurePdfCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +brochureExtension;
              const pdfPath =  path.join(__dirname, '../../pdf/'+projectPdf)
-             brochurePdfFile.mv(pdfPath)
              const buffer = Buffer.from(file.buffer, "utf-8");
              writeFileAsync(pdfPath, buffer);
          }
