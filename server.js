@@ -1,28 +1,28 @@
 const http = require("http");
 const dotEnv = require("dotenv");
-const fileUpload = require('express-fileupload');
+//const fileUpload = require('express-fileupload');
 const multer = require('multer');
 var cors = require("cors");
 const {join} = require('path');
 dotEnv.config();
 const Express = require("express");
-const BodyParser = require("body-parser");
+//const BodyParser = require("body-parser");
 const app = Express();
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-app.use(BodyParser.json({ limit: "50mb" }));
-app.use(BodyParser.urlencoded({ limit: "50mb", extended: true }));
+
+
+app.use(Express.json({ limit: "50mb" }));
+app.use(Express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 app.use(Express.static(join(__dirname, 'public')))
 app.use('/uploads',Express.static(join(__dirname, 'images')))
 app.use('/uploads',Express.static(join(__dirname, 'pdf')))
-app.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: 'public/'
-}));
+// app.use(fileUpload({
+//   useTempFiles: true,
+//   tempFileDir: 'public/'
+// }));
 
 
-app.use(multer({}).any())
+app.use(multer().any())
 
 const Port = process.env.PORT || 3000;
 const Server = http.createServer(app);
