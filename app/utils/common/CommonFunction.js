@@ -59,14 +59,14 @@ const imageFilter = function(req, file, cb) {
 const validateAndProcessFile = (file, allowedFileTypes = ['.jpg', '.jpeg', '.png', '.gif', '.svg'], size = 25) => {
   let errors = []
   const maxFileSize = size * 1024 * 1024; // 10 MB
-  const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+  const fileExtension = file.fieldname.toLowerCase().substring(file.fieldname.lastIndexOf('.'));
   if (!allowedFileTypes.includes(fileExtension)) {
-    errors.push(`Invalid file type: ${fileExtension} for ${file?.name} Required type is ${JSON.stringify(allowedFileTypes)}`)
+    errors.push(`Invalid file type: ${fileExtension} for ${file?.fieldname} Required type is ${JSON.stringify(allowedFileTypes)}`)
     return errors
     
   }
   if (file.size > maxFileSize) {
-     errors.push(`File size ${Math.floor(file?.size/(1024*1024))} MB exceeds the limit: ${Math.floor(maxFileSize/(1024 * 1024))} MB for file ${file?.name}`)
+     errors.push(`File size ${Math.floor(file?.size/(1024*1024))} MB exceeds the limit: ${Math.floor(maxFileSize/(1024 * 1024))} MB for file ${file?.fieldname}`)
      return errors
   
   }
