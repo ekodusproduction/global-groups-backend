@@ -150,9 +150,9 @@ const createProject = async(request) => {
 
        request?.files.forEach(async file => {
         if(file?.fieldname === "projectImage"){
-          let  projectImageFileWithoutExtention = path.parse(fieldname?.originalname).name
+          let  projectImageFileWithoutExtention = path.parse(file?.originalname).name
           console.log("filenamewithoutExtension", projectImageFileWithoutExtention)
-          const projectImageExtension = path.extname(fieldname.originalname);
+          const projectImageExtension = path.extname(file.originalname);
           console.log("fileExtension", projectImageExtension)
            const projectImageCleanName = projectImageFileWithoutExtention.replace(/\s/g, "_");
           const projectImage =  projectImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +projectImageExtension;
@@ -169,10 +169,10 @@ const createProject = async(request) => {
 
         
         }
-         if(fieldname?.fieldname === "architectureMap"){
-          let  architectureImageFileWithoutExtention = path.parse(fieldname?.originalname).name
+         if(file?.fieldname === "architectureMap"){
+          let  architectureImageFileWithoutExtention = path.parse(file?.originalname).name
                 console.log("architectureImageFileWithoutExtention", architectureImageFileWithoutExtention)
-                const architectureImageExtension = path.extname(fieldname.originalname);
+                const architectureImageExtension = path.extname(file.originalname);
                 console.log("fileExtension", architectureImageExtension)
                  const architecctureImageCleanName = architectureImageFileWithoutExtention.replace(/\s/g, "_");
                  architectureImage =  architecctureImageCleanName   .split(".")[0]  .trim().replace(" ", "_")  +  "-" + Date.now() +"."  +architectureImageExtension;
