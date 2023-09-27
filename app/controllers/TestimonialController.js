@@ -255,11 +255,11 @@ const getAllTestimonyList = async(request, response) =>{
                         StatusCode.errorMessage.EMPTY_GALLERY,
                         StatusCode.statusCode.SUCCESS,
                     ]);
-                    return response.status(StatusCode.statusCode.BAD_REQUEST).send({
+                    return response.status(StatusCode.statusCode.SUCCESS).send({
                         status: StatusCode.statusCode.SUCCESS,
                         data: {
-                            message: StatusCode.errorMessage.EMPTY_GALLERY,
-                            result: StatusCode.errorMessage.SUCCESS,
+                            message: "Testimonial List is Empty",
+                            result: [],
                         },
                     });
                 } else if(result[0].length > 0){
