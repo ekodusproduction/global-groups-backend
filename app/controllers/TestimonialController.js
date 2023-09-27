@@ -249,7 +249,7 @@ const getAllTestimonyList = async(request, response) =>{
               console.log("getAllTestimonyList", result)
               console.log("length", result[0].length)
                 if(result[0].length === 0){
-                    EventEmitter.errorEmitter("getAllTestimonyList", [
+                    EventEmitter.auditEmitter("getAllTestimonyList", [
                         apiName,
                         StatusCode.apiVersion.VERSION1 + request.route.path,
                         StatusCode.errorMessage.EMPTY_GALLERY,
