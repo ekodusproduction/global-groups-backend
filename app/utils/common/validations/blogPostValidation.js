@@ -28,7 +28,7 @@ const blogPostValidation = (data) => {
       title: Joi.string().required().max(200),
       summary: Joi.string().required().max(200),
       description: Joi.string().required(),
-      isPublished:  Joi.boolean().valid(true, false).required(),
+      isPublished:  Joi.number().integer().valid(1, 0).required(),
       posted_by: Joi.string().default('admin')
     });
     return schema.validate(data);
