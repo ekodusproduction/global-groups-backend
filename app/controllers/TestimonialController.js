@@ -123,7 +123,7 @@ const deleteTestimony = async(request, response) =>{
             TestimonyService.deleteTestimonialService(request).then((result) => {
                 console.log("result", result)
                 if(result?.notFound){
-                    console.log("enters here")
+                  
                     EventEmitter.auditEmitter("deleteTestimony", [
                         apiName,
                         StatusCode.apiVersion.VERSION1 + request.route.path,
@@ -137,8 +137,8 @@ const deleteTestimony = async(request, response) =>{
                             message: result?.message,
                         },
                     });
-                }else if(!result?.notFound && result?.deleted){
-                    console.log("enters herer 2")
+                }else if(!result?.notFound && result?.flag){
+                    
                     EventEmitter.auditEmitter("deleteTestimony", [
                         apiName,
                         StatusCode.apiVersion.VERSION1 + request.route.path,
