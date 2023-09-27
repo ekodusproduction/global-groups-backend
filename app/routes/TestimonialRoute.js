@@ -70,6 +70,7 @@ Router.delete("/testimony/deleteTestimony/:id", (response, request) => {
 
 
 Router.get("/testimony/getTestimonyList", (response, request) => {
+    console.log("testimony controller hitted once")
     TestimonialController.getAllTestimonyList(response, request);
 });
 module.exports = Router;
