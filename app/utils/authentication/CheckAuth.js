@@ -17,7 +17,7 @@ module.exports = (request, response, next) => {
                 ' }'
     )
     response
-      .status(401)
+      .status(200)
       .send({ status: 401, message: 'Unauthorized token' })
   }
 }
