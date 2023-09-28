@@ -164,7 +164,8 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 
 
 Router.get("/project/getAllProject", AppAuth, (response, request) => {
-    console.log("token ", request.getHeader('token'))
+    console.log()
+    console.log("token ", request?.headers.Authorization)
     console.log("appToken", request.getHeader('apptoken'))
 
     PropertyController.getAllProject(response, request);
