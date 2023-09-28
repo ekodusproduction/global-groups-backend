@@ -164,7 +164,7 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 });
 
 
-Router.get("/project/getAllProject", AppAuth, CheckAuth, (response, request) => {
+Router.get("/project/getAllProject", AppAuth, CheckAuth,  (response, request) => {
    
     console.log("appToken", request.getHeader('apptoken'))
 
@@ -183,7 +183,7 @@ Router.get("/project/getProjectBasicById/:projectId",  (response, request) => {
     PropertyController.getProjectBasicDetailsById(response, request);
 });
 
-Router.post("/project/addProject", (response, request) => {
+Router.post("/project/addProject", AppAuth, CheckAuth, (response, request) => {
     
     PropertyController.createProject(response, request);
     
