@@ -47,7 +47,7 @@ const getBlogPostByIdService = async (request) => {
 }
 const updateBlogPostService = async (request) => {
   return new Promise((resolve, reject) => {
-    BlogModel.postBlog(request)
+    BlogModel.updateBlogPostById(request)
       .then((result) => {
         resolve(result)
       })
