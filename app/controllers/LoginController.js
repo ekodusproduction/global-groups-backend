@@ -40,7 +40,7 @@ const adminLogin = async (request, response) => {
                         StatusCode.statusCode.DATA_NOT_FOUND,
                     ]);
                     return response
-                        .status(StatusCode.statusCode.DATA_NOT_FOUND)
+                        .status(StatusCode.statusCode.SUCCESS)
                         .send({
                             status: StatusCode.statusCode.DATA_NOT_FOUND,
                             data: {
