@@ -61,7 +61,7 @@ const adminLogin = (request) => {
                                     emailExist: true,
                                      validPassword: true,
                                     email: mailId,
-                                    token: `Bearer ${token}`,
+                                    token: `${token}`,
                                    
                                 };
 
