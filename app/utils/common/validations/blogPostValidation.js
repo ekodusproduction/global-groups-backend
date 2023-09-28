@@ -29,7 +29,9 @@ const blogPostValidation = (data) => {
       summary: Joi.string().required().max(200),
       description: Joi.string().required(),
       isPublished:  Joi.number().integer().valid(1, 0).required(),
-      posted_by: Joi.string().default('admin')
+      posted_by: Joi.string().default('admin'),
+      blogImage: Joi.string().optional(),
+ 
     });
     return schema.validate(data);
   };
