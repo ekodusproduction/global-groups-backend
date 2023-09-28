@@ -7,6 +7,7 @@ const multer = require("multer");
 const path = require('path');
 const EventEmitter = require("../utils/common/EventEmitter");
 const StatusCode = require("../utils/common/Constant");
+const CheckAuth = require("../utils/authentication/CheckAuth");
 
 
 
@@ -163,9 +164,8 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 });
 
 
-Router.get("/project/getAllProject", AppAuth, (response, request) => {
-    console.log()
-    console.log("token ", request?.headers.Authorization)
+Router.get("/project/getAllProject", AppAuth, CheckAuth, (response, request) => {
+   
     console.log("appToken", request.getHeader('apptoken'))
 
     PropertyController.getAllProject(response, request);
