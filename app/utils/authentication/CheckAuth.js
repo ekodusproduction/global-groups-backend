@@ -11,11 +11,11 @@ module.exports = (request, response, next) => {
     request.userData = decoded
     next()
   } catch (error) {
-    Log.error(
-      '{ middleware: Authorization, type: Exception, status: 401, error: ' +
-                error +
-                ' }'
-    )
+    // Log.error(
+    //   '{ middleware: Authorization, type: Exception, status: 401, error: ' +
+    //             error +
+    //             ' }'
+    // )
     response
       .status(200)
       .send({ status: 401, message: 'Unauthorized token' })
