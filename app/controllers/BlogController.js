@@ -221,7 +221,7 @@ const commonBlogAddLogic = (request, response, apiName)=>{
     });
 }
 
-const commonUpdateLogic = (request, respose, apiName) =>{
+const commonUpdateLogic = (request, response, apiName) =>{
     return new Promise(function () {
         BlogService.updateBlogPostService(request).then((result) => {
             console.log("result", result)
