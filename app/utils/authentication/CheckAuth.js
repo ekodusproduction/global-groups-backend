@@ -3,7 +3,7 @@ const Log = require('../logger/logger').log
 
 module.exports = (request, response, next) => {
   try {
-    const token = request.headers.authorization.split(' ')[1]
+    let token = request.headers.authorization.split(' ')[1]
     console.log("token", token)
     token= token+"ddddd";
     console.log("token", token)
