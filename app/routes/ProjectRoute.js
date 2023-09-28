@@ -9,11 +9,6 @@ const EventEmitter = require("../utils/common/EventEmitter");
 const StatusCode = require("../utils/common/Constant");
 
 
-/**
- * Date: 16-08-2023
- * Author:Dinesh
- * Description: List all active countries
- */
 
 const fileUploadStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -169,6 +164,9 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 
 
 Router.get("/project/getAllProject", AppAuth, (response, request) => {
+    console.log("token ", request.getHeader('token'))
+    console.log("appToken", request.getHeader('apptoken'))
+
     PropertyController.getAllProject(response, request);
 });
 
