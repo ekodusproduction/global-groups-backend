@@ -6,7 +6,7 @@ const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink)
 const getAllProjectList = async (request) => {
   let pageNumber =  request.query.pageNumber ? parseInt(request.query.pageNumber) : 1;;
-  let pageSize = request.query.pageSize ? parseInt(request.query?.pageSize): 10;
+  let pageSize = request.query.pageSize ? parseInt(request.query?.pageSize): 50;
   console.log("reuest", request.query)
 let isActive  = request?.query?.isactive ? request?.query?.isactive : null
 console.log("isActive", isActive)
@@ -83,7 +83,7 @@ const getResendtialProjectById = (request) => {
 
 const getAllCommercialProject = (request) => {
   let pageNumber =  request.params.pageNumber ? parseInt(request.params.pageNumber) : 1;;
-  let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 10
+  let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 50
   return new Promise(function (resolve, reject) {
     const subSqlQuery = `CALL procGetCommercialPropertyList(?,?)`;
     dbConn.getConnection((err, connection) => {
@@ -108,7 +108,7 @@ const getAllCommercialProject = (request) => {
 const getAllResedentialProject = (request) => {
  
   let pageNumber =  request.params.pageNumber ? parseInt(request.params.pageNumber) : 1;;
-  let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 10
+  let pageSize = request.params.pageSize ? parseInt(request.params?.pageSize): 50
   return new Promise(function (resolve, reject) {
     const subSqlQuery = `CALL procGetResendtialPropertyList(?, ?)`;
     dbConn.getConnection((err, connection) => {
