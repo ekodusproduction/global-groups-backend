@@ -439,12 +439,12 @@ if(error){
           console.log("getAllGalleryItemsByProjectId", result)
           console.log("length", result[0].length)
             if(result[0].length === 0){
-                EventEmitter.errorEmitter("getAllGalleryItemsByProjectId", [
-                    apiName,
-                    StatusCode.apiVersion.VERSION1 + request.route.path,
-                   "getAllGalleryItemsByProjectId",
-                    StatusCode.statusCode.SUCCESS,
-                ]);
+                // EventEmitter.errorEmitter("getAllGalleryItemsByProjectId", [
+                //     apiName,
+                //     StatusCode.apiVersion.VERSION1 + request.route.path,
+                //    "getAllGalleryItemsByProjectId",
+                //     StatusCode.statusCode.SUCCESS,
+                // ]);
                 return response.status(StatusCode.statusCode.SUCCESS).send({
                     status: StatusCode.statusCode.SUCCESS,
                     data: {
