@@ -164,7 +164,7 @@ Router.get("/project/commercial/:propertyId", (response, request) => {
 });
 
 
-Router.get("/project/getAllProject", AppAuth, CheckAuth,  (response, request) => {
+Router.get("/project/getAllProject", AppAuth,  (response, request) => {
    
     console.log("appToken", request.getHeader('apptoken'))
 
